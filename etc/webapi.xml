@@ -1,0 +1,122 @@
+<?xml version="1.0" ?>
+<routes xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Webapi:etc/webapi.xsd">
+	<route method="POST" url="/V1/dealer4dealer-substituteorders/order">
+		<service class="Dealer4Dealer\SubstituteOrders\Api\OrderManagementInterface" method="postOrder"/>
+		<resources>
+			<resource ref="Dealer4Dealer_SubstituteOrders::Order_save"/>
+		</resources>
+	</route>
+	<route method="GET" url="/V1/dealer4dealer-substituteorders/order/:id">
+		<service class="Dealer4Dealer\SubstituteOrders\Api\OrderManagementInterface" method="getOrder"/>
+		<resources>
+			<resource ref="Dealer4Dealer_SubstituteOrders::Order"/>
+		</resources>
+	</route>
+	<route method="GET" url="/V1/dealer4dealer-substituteorders/magentoorder/:id">
+		<service class="Dealer4Dealer\SubstituteOrders\Api\OrderManagementInterface" method="getOrderByMagento"/>
+		<resources>
+			<resource ref="Dealer4Dealer_SubstituteOrders::Order"/>
+		</resources>
+	</route>
+	<route method="GET" url="/V1/dealer4dealer-substituteorders/extorder/:id">
+		<service class="Dealer4Dealer\SubstituteOrders\Api\OrderManagementInterface" method="getOrderByExt"/>
+		<resources>
+			<resource ref="Dealer4Dealer_SubstituteOrders::Order"/>
+		</resources>
+	</route>
+	<route method="PUT" url="/V1/dealer4dealer-substituteorders/order">
+		<service class="Dealer4Dealer\SubstituteOrders\Api\OrderManagementInterface" method="putOrder"/>
+		<resources>
+			<resource ref="Dealer4Dealer_SubstituteOrders::Order_update"/>
+		</resources>
+	</route>
+	<route method="DELETE" url="/V1/dealer4dealer-substituteorders/order/:id">
+		<service class="Dealer4Dealer\SubstituteOrders\Api\OrderManagementInterface" method="deleteOrder"/>
+		<resources>
+			<resource ref="Dealer4Dealer_SubstituteOrders::Order_delete"/>
+		</resources>
+	</route>
+
+
+	<route method="GET" url="/V1/dealer4dealer-substituteorders/invoice:id">
+		<service class="Dealer4Dealer\SubstituteOrders\Api\InvoiceManagementInterface" method="getInvoice"/>
+		<resources>
+			<resource ref="Dealer4Dealer_SubstituteOrders::Invoice_save"/>
+		</resources>
+	</route>
+	<route method="POST" url="/V1/dealer4dealer-substituteorders/invoice">
+		<service class="Dealer4Dealer\SubstituteOrders\Api\InvoiceManagementInterface" method="postInvoice"/>
+		<resources>
+			<resource ref="Dealer4Dealer_SubstituteOrders::Invoice_save"/>
+		</resources>
+	</route>
+	<route method="PUT" url="/V1/dealer4dealer-substituteorders/invoice">
+		<service class="Dealer4Dealer\SubstituteOrders\Api\InvoiceManagementInterface" method="putInvoice"/>
+		<resources>
+			<resource ref="Dealer4Dealer_SubstituteOrders::Invoice_save"/>
+		</resources>
+	</route>
+	<route method="DELETE" url="/V1/dealer4dealer-substituteorders/invoice:id">
+		<service class="Dealer4Dealer\SubstituteOrders\Api\InvoiceManagementInterface" method="deleteInvoice"/>
+		<resources>
+			<resource ref="Dealer4Dealer_SubstituteOrders::Invoice_save"/>
+		</resources>
+	</route>
+
+
+	<route method="GET" url="/V1/dealer4dealer-substituteorders/shipment:id">
+		<service class="Dealer4Dealer\SubstituteOrders\Api\ShipmentManagementInterface" method="getShipment"/>
+		<resources>
+			<resource ref="Dealer4Dealer_SubstituteOrders::Shipment_view"/>
+		</resources>
+	</route>
+	<route method="POST" url="/V1/dealer4dealer-substituteorders/shipment">
+		<service class="Dealer4Dealer\SubstituteOrders\Api\ShipmentManagementInterface" method="postShipment"/>
+		<resources>
+			<resource ref="Dealer4Dealer_SubstituteOrders::Shipment_save"/>
+		</resources>
+	</route>
+	<route method="PUT" url="/V1/dealer4dealer-substituteorders/shipment">
+		<service class="Dealer4Dealer\SubstituteOrders\Api\ShipmentManagementInterface" method="putShipment"/>
+		<resources>
+			<resource ref="Dealer4Dealer_SubstituteOrders::Shipment_update"/>
+		</resources>
+	</route>
+	<route method="DELETE" url="/V1/dealer4dealer-substituteorders/shipment:id">
+		<service class="Dealer4Dealer\SubstituteOrders\Api\ShipmentManagementInterface" method="deleteShipment"/>
+		<resources>
+			<resource ref="Dealer4Dealer_SubstituteOrders::Shipment_delete"/>
+		</resources>
+	</route>
+	
+	<route method="POST" url="/V1/dealer4dealer-substituteorders/attachment">
+		<service class="Dealer4Dealer\SubstituteOrders\Api\AttachmentRepositoryInterface" method="save"/>
+		<resources>
+			<resource ref="Dealer4Dealer_SubstituteOrders::Attachment_save"/>
+		</resources>
+	</route>
+	<route method="GET" url="/V1/dealer4dealer-substituteorders/attachment/search">
+		<service class="Dealer4Dealer\SubstituteOrders\Api\AttachmentRepositoryInterface" method="getList"/>
+		<resources>
+			<resource ref="Dealer4Dealer_SubstituteOrders::Attachment_view"/>
+		</resources>
+	</route>
+	<route method="GET" url="/V1/dealer4dealer-substituteorders/attachment/:attachmentId">
+		<service class="Dealer4Dealer\SubstituteOrders\Api\AttachmentRepositoryInterface" method="getById"/>
+		<resources>
+			<resource ref="Dealer4Dealer_SubstituteOrders::Attachment_view"/>
+		</resources>
+	</route>
+	<route method="PUT" url="/V1/dealer4dealer-substituteorders/attachment/:attachmentId">
+		<service class="Dealer4Dealer\SubstituteOrders\Api\AttachmentRepositoryInterface" method="save"/>
+		<resources>
+			<resource ref="Dealer4Dealer_SubstituteOrders::Attachment_update"/>
+		</resources>
+	</route>
+	<route method="DELETE" url="/V1/dealer4dealer-substituteorders/attachment/:attachmentId">
+		<service class="Dealer4Dealer\SubstituteOrders\Api\AttachmentRepositoryInterface" method="deleteById"/>
+		<resources>
+			<resource ref="Dealer4Dealer_SubstituteOrders::Attachment_delete"/>
+		</resources>
+	</route>
+</routes>

@@ -1,0 +1,55 @@
+<?php
+/**
+ * A Magento 2 module named Dealer4Dealer\SubstituteOrders
+ * Copyright (C) 2017 Maikel Martens
+ *
+ * This file is part of Dealer4Dealer\SubstituteOrders.
+ *
+ * Dealer4Dealer\SubstituteOrders is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
+ *
+ * @codingStandardsIgnoreFile
+ */
+
+?>
+<?php $_invoices = $block->getInvoiceCollection(); ?>
+<?php $_currencyHelper = $this->helper('Magento\Framework\Pricing\Helper\Data'); ?>
+<?php echo $block->getChildHtml('info');?>
+<?php if ($_invoices && count($_invoices)): ?>
+    <div class="table-wrapper substitute-orders-order-history">
+        <table class="data table table-order-items history" id="my-orders-table">
+            <caption class="table-caption"><?php /* @escapeNotVerified */ echo __('Orders') ?></caption>
+            <thead>
+            <tr>
+                <th scope="col" class="col id"><?php /* @escapeNotVerified */ echo __('Order #') ?></th>
+                <th scope="col" class="col date"><?php /* @escapeNotVerified */ echo __('Date') ?></th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <?php foreach ($_invoices as $_invoice): ?>
+                <tr>
+                    <td data-th="<?php echo $block->escapeHtml(__('Invoice #')) ?>" class="col id"><?php /* @escapeNotVerified */ echo $_invoice->getId() ?></td>
+                    <td data-th="<?php echo $block->escapeHtml(__('Date')) ?>" class="col date"><?php /* @escapeNotVerified */ echo $block->formatDate($_invoice->getInvoiceDate()) ?></td>
+                    <td>
+                        <a href="<?php echo $block->getDownloadPdfLink($_invoice->getId()) ?>">invoice</a>
+                    </td>
+                </tr>
+
+            <?php endforeach; ?>
+            </tbody>
+        </table>
+    </div>
+<?php else: ?>
+    <div class="message info empty"><span><?php /* @escapeNotVerified */ echo __('You have placed no orders.'); ?></span></div>
+<?php endif ?>

@@ -1,0 +1,34 @@
+<div class="substitute-order-search">
+    <form method="get">
+        <fieldset class="fieldset">
+            <div class="field search">
+                <label class="label" for="substitute-order-search">
+                    <span><?php echo __('Search'); ?></span>
+                </label>
+                <input id="substitute-order-search" type="text" name="q" value="<?php echo ($block->getRequest()->getParam('q')) ? $block->getRequest()->getParam('q') : ''; ?>" placeholder="<?php echo __('Search orders'); ?>" class="input-text" maxlength="128">
+            </div>
+
+            <?php
+            echo $block->getLayout()
+                ->createBlock('Dealer4Dealer\SubstituteOrders\Block\Order\Search\DatePickerField')
+                ->setLabel(__('Date From'))
+                ->setHtmlId('date_from')
+                ->toHtml()
+            ?>
+
+            <?php
+            echo $block->getLayout()
+                ->createBlock('Dealer4Dealer\SubstituteOrders\Block\Order\Search\DatePickerField')
+                ->setLabel(__('Date To'))
+                ->setHtmlId('date_to')
+                ->toHtml()
+            ?>
+
+            <button type="submit" title="Search" class="action submit primary">
+                <span><?php echo __('Search'); ?></span>
+            </button>
+
+            <a href="<?php echo $block->getUrl('substitute/order'); ?>" class="action" style="margin: 0 0 0 10px;"><?php echo __('Reset'); ?></a>
+        </fieldset>
+    </form>
+</div>

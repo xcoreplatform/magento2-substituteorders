@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+
+    <!-- Update handles -->
+    <update handle="customer_account"/>
+    <update handle="substitute_order_item_price"/>
+    <update handle="substitute_order_info_links"/>
+
+    <!-- Modify elements -->
+    <body>
+        <referenceContainer name="page.main.title">
+            <block class="Dealer4Dealer\SubstituteOrders\Block\Order\Info" name="order.status" template="Dealer4Dealer_SubstituteOrders::order/order_status.phtml"/>
+            <block class="Dealer4Dealer\SubstituteOrders\Block\Order\Info" name="order.date" template="Dealer4Dealer_SubstituteOrders::order/order_date.phtml"/>
+            <container name="order.actions.container" htmlTag="div" htmlClass="actions-toolbar order-actions-toolbar">
+                <block class="Dealer4Dealer\SubstituteOrders\Block\Order\Info\Buttons" as="buttons" name="substituteorder.order.info.buttons" cacheable="false"/>
+            </container>
+        </referenceContainer>
+
+        <referenceContainer name="content">
+            <block class="Dealer4Dealer\SubstituteOrders\Block\Order\Invoice" name="sales.order.invoice" cacheable="false" after="sales.order.info.links">
+                <block class="Dealer4Dealer\SubstituteOrders\Block\Order\Invoice\Items" name="invoice_items" template="Dealer4Dealer_SubstituteOrders::order/invoice/items.phtml">
+                    <block class="Dealer4Dealer\SubstituteOrders\Block\Order\Item\Renderer\DefaultRenderer" name="substituteorder.order.invoice.renderers" as="renderer.list" template="Dealer4Dealer_SubstituteOrders::order/invoice/items/renderer/default.phtml"/>
+                    <block class="Dealer4Dealer\SubstituteOrders\Block\Order\Invoice\Totals" name="invoice_totals" template="Dealer4Dealer_SubstituteOrders::order/totals.phtml">
+                        <arguments>
+                            <argument name="label_properties" xsi:type="string">colspan="4" class="mark"</argument>
+                            <argument name="value_properties" xsi:type="string">class="amount"</argument>
+                        </arguments>
+                        <block class="Magento\Tax\Block\Sales\Order\Tax" name="tax" template="Dealer4Dealer_SubstituteOrders::order/tax.phtml"/>
+                    </block>
+                    <block class="Magento\Sales\Block\Order\Comments" name="invoice_comments" template="Dealer4Dealer_SubstituteOrders::order/comments.phtml"/>
+                    <block class="Dealer4Dealer\SubstituteOrders\Block\Order\Attachment" name="invoice_attachments" template="Dealer4Dealer_SubstituteOrders::order/attachments.phtml"/>
+                </block>
+            </block>
+            <block class="Dealer4Dealer\SubstituteOrders\Block\Order\Info" as="info" name="sales.order.info" after="-"/>
+        </referenceContainer>
+
+    </body>
+</page>

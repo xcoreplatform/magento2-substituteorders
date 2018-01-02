@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <update handle="customer_account"/>
+    <referenceContainer name="content">
+        <block class="Dealer4Dealer\SubstituteOrders\Block\Invoice\Invoice" name="invoice_display" template="Dealer4Dealer_SubstituteOrders::invoice/index.phtml"/>
+    </referenceContainer>
+</page>

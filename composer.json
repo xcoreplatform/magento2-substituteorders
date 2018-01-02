@@ -1,0 +1,27 @@
+{
+    "name": "dealer4dealer/module-substituteorders",
+    "description": "A module so Magento saves orders from multiple sources in one table, overrides the default order list in customer backend. ",
+    "license": "GPL-3.0",
+    "authors": [
+        {
+            "name": "Mage2Gen",
+            "email": "info@mage2gen.com"
+        },
+        {
+            "name": "Robbert Stevens",
+            "email": "robbert.stevens@dealer4dealer.nl"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "dealer4dealer/module-core": "~1.0.4"
+    },
+    "autoload": {
+        "psr-4": {
+            "Dealer4Dealer\\SubstituteOrders\\": ""
+        },
+        "files": [
+            "registration.php"
+        ]
+    }
+}

@@ -1,0 +1,15 @@
+<?xml version="1.0" ?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Event/etc/events.xsd">
+	<event name="sales_order_save_after">
+		<observer instance="Dealer4Dealer\SubstituteOrders\Observer\Sales\OrderSaveAfter" name="dealer4dealer_substituteorders_observer_sales_orderplaceafter_sales_order_save_after"/>
+	</event>
+	<event name="sales_order_invoice_save_after">
+		<observer instance="Dealer4Dealer\SubstituteOrders\Observer\Sales\OrderInvoiceSaveAfter" name="dealer4dealer_substituteorders_observer_sales_orderinvoicesaveafter_sales_order_invoice_save_after"/>
+	</event>
+	<event name="sales_order_shipment_save_after">
+		<observer instance="Dealer4Dealer\SubstituteOrders\Observer\Sales\OrderShipmentSaveAfter" name="dealer4dealer_substituteorders_observer_sales_ordershipmentsaveafter_sales_order_shipment_save_after"/>
+	</event>
+	<event name="sales_order_shipment_track_save_after">
+		<observer instance="Dealer4Dealer\SubstituteOrders\Observer\Sales\OrderShipmentTrackSaveAfter" name="dealer4dealer_substituteorders_observer_sales_ordershipmenttracksaveafter_sales_order_shipment_track_save_after"/>
+	</event>
+</config>

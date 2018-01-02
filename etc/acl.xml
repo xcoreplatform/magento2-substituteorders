@@ -1,0 +1,55 @@
+<?xml version="1.0" ?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Acl/etc/acl.xsd">
+	<acl>
+		<resources>
+			<resource id="Magento_Backend::admin">
+			    <resource id="Dealer4Dealer_SubstituteOrders::Order" sortOrder="10" title="Substitute Order">
+                    <resource id="Dealer4Dealer_SubstituteOrders::Order_save" sortOrder="10" title="Save Order"/>
+                    <resource id="Dealer4Dealer_SubstituteOrders::Order_delete" sortOrder="20" title="Delete Order"/>
+                    <resource id="Dealer4Dealer_SubstituteOrders::Order_update" sortOrder="30" title="Update Order"/>
+                    <resource id="Dealer4Dealer_SubstituteOrders::Order_view" sortOrder="40" title="View Order"/>
+                </resource>
+				<resource id="Dealer4Dealer_SubstituteOrders::OrderItem" sortOrder="10" title="OrderItem">
+					<resource id="Dealer4Dealer_SubstituteOrders::OrderItem_save" sortOrder="10" title="Save OrderItem"/>
+					<resource id="Dealer4Dealer_SubstituteOrders::OrderItem_delete" sortOrder="20" title="Delete OrderItem"/>
+					<resource id="Dealer4Dealer_SubstituteOrders::OrderItem_update" sortOrder="30" title="Update OrderItem"/>
+					<resource id="Dealer4Dealer_SubstituteOrders::OrderItem_view" sortOrder="40" title="View OrderItem"/>
+				</resource>
+				<resource id="Dealer4Dealer_SubstituteOrders::OrderAddress" sortOrder="10" title="OrderAddress">
+                    <resource id="Dealer4Dealer_SubstituteOrders::OrderAddress_save" sortOrder="10" title="Save OrderAddress"/>
+                    <resource id="Dealer4Dealer_SubstituteOrders::OrderAddress_delete" sortOrder="20" title="Delete OrderAddress"/>
+                    <resource id="Dealer4Dealer_SubstituteOrders::OrderAddress_update" sortOrder="30" title="Update OrderAddress"/>
+                    <resource id="Dealer4Dealer_SubstituteOrders::OrderAddress_view" sortOrder="40" title="View OrderAddress"/>
+                </resource>
+
+				<resource id="Dealer4Dealer_SubstituteOrders::Invoice" sortOrder="11" title="Substitute Invoice">
+					<resource id="Dealer4Dealer_SubstituteOrders::Invoice_save" sortOrder="10" title="Save Invoice"/>
+					<resource id="Dealer4Dealer_SubstituteOrders::Invoice_delete" sortOrder="20" title="Delete Invoice"/>
+					<resource id="Dealer4Dealer_SubstituteOrders::Invoice_update" sortOrder="30" title="Update Invoice"/>
+					<resource id="Dealer4Dealer_SubstituteOrders::Invoice_view" sortOrder="40" title="View Invoice"/>
+				</resource>
+
+				<resource id="Dealer4Dealer_SubstituteOrders::Shipment" sortOrder="10" title="Shipment">
+					<resource id="Dealer4Dealer_SubstituteOrders::Shipment_save" sortOrder="10" title="Save Shipment"/>
+					<resource id="Dealer4Dealer_SubstituteOrders::Shipment_delete" sortOrder="20" title="Delete Shipment"/>
+					<resource id="Dealer4Dealer_SubstituteOrders::Shipment_update" sortOrder="30" title="Update Shipment"/>
+					<resource id="Dealer4Dealer_SubstituteOrders::Shipment_view" sortOrder="40" title="View Shipment"/>
+				</resource>
+
+				<resource id="Dealer4Dealer_SubstituteOrders::ShipmentItem" sortOrder="10" title="ShipmentItem">
+					<resource id="Dealer4Dealer_SubstituteOrders::ShipmentItem_save" sortOrder="10" title="Save ShipmentItem"/>
+					<resource id="Dealer4Dealer_SubstituteOrders::ShipmentItem_delete" sortOrder="20" title="Delete ShipmentItem"/>
+					<resource id="Dealer4Dealer_SubstituteOrders::ShipmentItem_update" sortOrder="30" title="Update ShipmentItem"/>
+					<resource id="Dealer4Dealer_SubstituteOrders::ShipmentItem_view" sortOrder="40" title="View ShipmentItem"/>
+				</resource>
+				
+				<resource id="Dealer4Dealer_SubstituteOrders::Attachment" sortOrder="10" title="Attachment">
+					<resource id="Dealer4Dealer_SubstituteOrders::Attachment_save" sortOrder="10" title="Save Attachment"/>
+					<resource id="Dealer4Dealer_SubstituteOrders::Attachment_delete" sortOrder="20" title="Delete Attachment"/>
+					<resource id="Dealer4Dealer_SubstituteOrders::Attachment_update" sortOrder="30" title="Update Attachment"/>
+					<resource id="Dealer4Dealer_SubstituteOrders::Attachment_view" sortOrder="40" title="View Attachment"/>
+				</resource>
+			</resource>
+		</resources>
+	</acl>
+</config>

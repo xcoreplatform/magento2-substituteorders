@@ -1,0 +1,96 @@
+<?php
+/**
+ * Copyright © 2013-2017 Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+// @codingStandardsIgnoreFile
+
+?>
+<?php /** @var  $block \Dealer4Dealer\SubstituteOrders\Block\Order\Shipment\Items */ ?>
+<?php $_order = $block->getOrder() ?>
+
+<div class="actions-toolbar">
+    <?php if ($_order->getTracking()) : ?>
+        <?php echo $block->getChildHtml('track-all-link') ?>
+    <?php endif; ?>
+</div>
+
+<?php if(count($_order->getShipmentCollection()) > 0): ?>
+    <?php foreach ($_order->getShipmentCollection() as $_shipment): ?>
+        <div class="order-title">
+            <strong><?php /* @escapeNotVerified */
+                echo __('Shipment #') ?><?php /* @escapeNotVerified */
+                echo $_shipment->getIncrementId(); ?></strong>
+
+            <?php if ($block->hasTracking()) : ?>
+                <a href="#"
+                   data-mage-init='{"popupWindow": {"windowURL":"<?php /* @escapeNotVerified */
+                   echo $block->getShipmentTrackUrl($_order) ?>","windowName":"trackshipment","width":800,"height":600,"top":0,"left":0,"resizable":1,"scrollbars":1}}'
+                   title="<?php /* @escapeNotVerified */
+                   echo __('Track this shipment') ?>"
+                   class="action track">
+                    <span><?php /* @escapeNotVerified */
+                        echo __('Track this shipment') ?></span>
+                </a>
+            <?php endif; ?>
+        </div>
+        <?php $tracks = $_shipment->getTracksCollection(); ?>
+        <?php if ($tracks): ?>
+            <dl class="order-tracking" id="my-tracking-table-<?php /* @escapeNotVerified */
+            echo $_shipment->getId(); ?>">
+                <dt class="tracking-title">
+                    <?php /* @escapeNotVerified */
+                    echo __('Tracking Number(s):') ?>
+                </dt>
+                <dd class="tracking-content">
+                    <?php
+                    $i = 1;
+                    $_size = $tracks->count();
+                    foreach ($tracks as $track): ?>
+                        <?php if ($track->isCustom()): ?><?php echo $block->escapeHtml($track->getNumber()) ?><?php else: ?>
+                            <a
+                            href="#"
+                            data-mage-init='{"popupWindow": {"windowURL":"<?php /* @escapeNotVerified */
+                            echo $this->helper('Magento\Shipping\Helper\Data')->getTrackingPopupUrlBySalesModel($track) ?>","windowName":"trackorder","width":800,"height":600,"left":0,"top":0,"resizable":1,"scrollbars":1}}'
+                            class="action track"><span><?php echo $block->escapeHtml($track->getNumber()) ?></span>
+                            </a><?php endif; ?><?php if ($i != $_size): ?>, <?php endif; ?>
+                        <?php $i++;
+                    endforeach; ?>
+                </dd>
+            </dl>
+        <?php endif; ?>
+        <div class="table-wrapper order-items-shipment">
+            <table class="data table table-order-items shipment" id="my-shipment-table-<?php /* @escapeNotVerified */
+            echo $_shipment->getId(); ?>">
+                <caption class="table-caption"><?php /* @escapeNotVerified */
+                    echo __('Items Shipped') ?></caption>
+                <thead>
+                <tr>
+                    <th class="col name"><?php /* @escapeNotVerified */
+                        echo __('Product Name') ?></th>
+                    <th class="col sku"><?php /* @escapeNotVerified */
+                        echo __('SKU') ?></th>
+                    <th class="col qty"><?php /* @escapeNotVerified */
+                        echo __('Qty Shipped') ?></th>
+                </tr>
+                </thead>
+                <?php $_items = $_shipment->getItems(); ?>
+                <?php $_count = count($_items) ?>
+                <?php foreach ($_items as $_item): ?>
+                    <tbody>
+                    <?php if ($itemRenderBlock = $block->getChildBlock('renderer.list')): ?>
+                        <?php $itemRenderBlock->setData('item', $_item) ?>
+                        <?php echo $block->getChildHtml('renderer.list', false); ?>
+                    <?php endif; ?>
+                    </tbody>
+                <?php endforeach; ?>
+            </table>
+        </div>
+        <?php echo $block->getCommentsHtml($_shipment) ?>
+        <?php echo $block->getShipmenteAttachmentHtml($_shipment) ?>
+    <?php endforeach; ?>
+<?php else: ?>
+    <p><?php /* @escapeNotVerified */
+        echo __('No shipments available for this order.') ?></p>
+<?php endif; ?>

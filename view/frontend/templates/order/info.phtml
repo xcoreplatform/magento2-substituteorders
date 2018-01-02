@@ -1,0 +1,71 @@
+<?php
+/**
+ * A Magento 2 module named Dealer4Dealer\SubstituteOrders
+ * Copyright (C) 2017 Maikel Martens
+ *
+ * This file is part of Dealer4Dealer\SubstituteOrders.
+ *
+ * Dealer4Dealer\SubstituteOrders is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
+ *
+ * @codingStandardsIgnoreFile
+ */
+
+?>
+<?php /** @var $block \Magento\Sales\Block\Order\Info */ ?>
+<?php $_order = $block->getOrder() ?>
+<div class="block block-order-details-view">
+    <div class="block-title">
+        <strong><?php /* @escapeNotVerified */ echo __('Order Information') ?></strong>
+    </div>
+    <div class="block-content">
+    <?php if (!$_order->getIsVirtual()): ?>
+        <div class="box box-order-shipping-address">
+            <strong class="box-title"><span><?php /* @escapeNotVerified */ echo __('Shipping Address') ?></span></strong>
+            <div class="box-content">
+                <address><?php /* @escapeNotVerified */ echo $block->getFormattedAddress($_order->getShippingAddress()); ?></address>
+            </div>
+        </div>
+
+        <div class="box box-order-shipping-method">
+            <strong class="box-title">
+                <span><?php /* @escapeNotVerified */ echo __('Shipping Method') ?></span>
+            </strong>
+            <div class="box-content">
+            <?php if ($_order->getShippingDescription()): ?>
+                <?php echo $block->escapeHtml($_order->getShippingDescription()) ?>
+            <?php else: ?>
+                <?php /* @escapeNotVerified */ echo __('No shipping information available'); ?>
+            <?php endif; ?>
+            </div>
+        </div>
+    <?php endif; ?>
+
+        <div class="box box-order-billing-address">
+            <strong class="box-title">
+                <span><?php /* @escapeNotVerified */ echo __('Billing Address') ?></span>
+            </strong>
+            <div class="box-content">
+                <address><?php /* @escapeNotVerified */ echo $block->getFormattedAddress($_order->getBillingAddress()); ?></address>
+            </div>
+        </div>
+        <div class="box box-order-billing-method">
+            <strong class="box-title">
+                <span><?php /* @escapeNotVerified */ echo __('Payment Method') ?></span>
+            </strong>
+            <div class="box-content">
+                <?php echo $_order->getPaymentMethod() ?>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © 2013-2017 Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+
+    <!-- Update handles -->
+    <update handle="substituteorder.order.print.invoice.renderers"/>
+    <update handle="substitute_order_item_price"/>
+    <update handle="print" />
+
+    <!-- Modify elements -->
+    <body>
+        <attribute name="class" value="account"/>
+        <referenceContainer name="page.main.title">
+            <block class="Dealer4Dealer\SubstituteOrders\Block\Order\PrintShipment" name="order.status" template="Dealer4Dealer_SubstituteOrders::order/order_status.phtml" />
+            <block class="Dealer4Dealer\SubstituteOrders\Block\Order\PrintShipment" name="order.date" template="Dealer4Dealer_SubstituteOrders::order/order_date.phtml" />
+        </referenceContainer>
+        <referenceContainer name="content">
+            <block class="Dealer4Dealer\SubstituteOrders\Block\Order\PrintOrder\Invoice" name="sales.order.print.invoice"  template="Dealer4Dealer_SubstituteOrders::order/print/invoice.phtml">
+                <block class="Dealer4Dealer\SubstituteOrders\Block\Order\Item\Renderer\DefaultRenderer" name="substituteorder.order.print.invoice.renderers" as="renderer.list" template="Dealer4Dealer_SubstituteOrders::order/invoice/items/renderer/default.phtml"/>
+                <block class="Dealer4Dealer\SubstituteOrders\Block\Order\Invoice\Totals" name="invoice_totals" template="Dealer4Dealer_SubstituteOrders::order/totals.phtml" cacheable="false">
+                    <arguments>
+                        <argument name="label_properties" xsi:type="string">colspan="4" class="mark"</argument>
+                        <argument name="value_properties" xsi:type="string">class="amount"</argument>
+                    </arguments>
+                    <block class="Magento\Tax\Block\Sales\Order\Tax" name="tax" template="Dealer4Dealer_SubstituteOrders::order/tax.phtml"/>
+                </block>
+            </block>
+        </referenceContainer>
+        <block class="Magento\Framework\View\Element\Template" name="additional.product.info" template="Magento_Theme::template.phtml"/>
+    </body>
+</page>

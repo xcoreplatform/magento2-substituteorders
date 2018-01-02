@@ -1,0 +1,80 @@
+<?xml version="1.0" ?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+
+    <type name="Magento\Framework\Console\CommandList">
+        <arguments>
+            <argument name="commands" xsi:type="array">
+                <item name="updateOrders" xsi:type="object">Dealer4Dealer\SubstituteOrders\Console\Command\UpdateOrders</item>
+            </argument>
+        </arguments>
+    </type>
+
+
+    <preference for="Dealer4Dealer\SubstituteOrders\Api\Data\AdditionalDataInterface" type="Dealer4Dealer\SubstituteOrders\Model\AdditionalData"/>
+
+    <preference for="Dealer4Dealer\SubstituteOrders\Api\OrderManagementInterface" type="Dealer4Dealer\SubstituteOrders\Model\OrderManagement"/>
+    <preference for="Dealer4Dealer\SubstituteOrders\Api\OrderAddressManagementInterface" type="Dealer4Dealer\SubstituteOrders\Model\OrderAddressManagement"/>
+    <preference for="Dealer4Dealer\SubstituteOrders\Api\OrderItemsManagementInterface" type="Dealer4Dealer\SubstituteOrders\Model\OrderItemsManagement"/>
+
+    <!--Order Repository-->
+    <preference for="Dealer4Dealer\SubstituteOrders\Api\OrderRepositoryInterface" type="Dealer4Dealer\SubstituteOrders\Model\OrderRepository"/>
+    <preference for="Dealer4Dealer\SubstituteOrders\Api\OrderAddressRepositoryInterface" type="Dealer4Dealer\SubstituteOrders\Model\OrderAddressRepository"/>
+    <preference for="Dealer4Dealer\SubstituteOrders\Api\OrderItemRepositoryInterface" type="Dealer4Dealer\SubstituteOrders\Model\OrderItemRepository"/>
+
+    <!--Order API Data-->
+    <preference for="Dealer4Dealer\SubstituteOrders\Api\Data\OrderInterface" type="Dealer4Dealer\SubstituteOrders\Model\Order"/>
+    <preference for="Dealer4Dealer\SubstituteOrders\Api\Data\OrderAddressInterface" type="Dealer4Dealer\SubstituteOrders\Model\OrderAddress"/>
+    <preference for="Dealer4Dealer\SubstituteOrders\Api\Data\OrderItemInterface" type="Dealer4Dealer\SubstituteOrders\Model\OrderItem"/>
+
+    <!--Order Search results-->
+    <preference for="Dealer4Dealer\SubstituteOrders\Api\Data\OrderSearchResultsInterface" type="Magento\Framework\Api\SearchResults"/>
+    <preference for="Dealer4Dealer\SubstituteOrders\Api\Data\OrderAddressSearchResultsInterface" type="Magento\Framework\Api\SearchResults"/>
+    <preference for="Dealer4Dealer\SubstituteOrders\Api\Data\OrderItemSearchResultsInterface" type="Magento\Framework\Api\SearchResults"/>
+
+    <preference for="Dealer4Dealer\SubstituteOrders\Api\InvoiceManagementInterface" type="Dealer4Dealer\SubstituteOrders\Model\InvoiceManagement"/>
+
+    <!--Invoice repository-->
+    <preference for="Dealer4Dealer\SubstituteOrders\Api\InvoiceRepositoryInterface" type="Dealer4Dealer\SubstituteOrders\Model\InvoiceRepository"/>
+    <preference for="Dealer4Dealer\SubstituteOrders\Api\Data\InvoiceInterface" type="Dealer4Dealer\SubstituteOrders\Model\Invoice"/>
+    <preference for="Dealer4Dealer\SubstituteOrders\Api\Data\InvoiceSearchResultsInterface" type="Magento\Framework\Api\SearchResults"/>
+
+    <!--Invoice item repository-->
+    <preference for="Dealer4Dealer\SubstituteOrders\Api\InvoiceItemRepositoryInterface" type="Dealer4Dealer\SubstituteOrders\Model\InvoiceItemRepository"/>
+    <preference for="Dealer4Dealer\SubstituteOrders\Api\Data\InvoiceItemInterface" type="Dealer4Dealer\SubstituteOrders\Model\InvoiceItem"/>
+    <preference for="Dealer4Dealer\SubstituteOrders\Api\Data\InvoiceItemSearchResultsInterface" type="Magento\Framework\Api\SearchResults"/>
+
+    <!--Shipment repository-->
+    <preference for="Dealer4Dealer\SubstituteOrders\Api\ShipmentRepositoryInterface" type="Dealer4Dealer\SubstituteOrders\Model\ShipmentRepository"/>
+    <preference for="Dealer4Dealer\SubstituteOrders\Api\Data\ShipmentInterface" type="Dealer4Dealer\SubstituteOrders\Model\Shipment"/>
+    <preference for="Dealer4Dealer\SubstituteOrders\Api\Data\ShipmentSearchResultsInterface" type="Magento\Framework\Api\SearchResults"/>
+
+    <!--Shipment item repository-->
+    <preference for="Dealer4Dealer\SubstituteOrders\Api\ShipmentItemRepositoryInterface" type="Dealer4Dealer\SubstituteOrders\Model\ShipmentItemRepository"/>
+    <preference for="Dealer4Dealer\SubstituteOrders\Api\Data\ShipmentItemInterface" type="Dealer4Dealer\SubstituteOrders\Model\ShipmentItem"/>
+    <preference for="Dealer4Dealer\SubstituteOrders\Api\Data\ShipmentItemSearchResultsInterface" type="Magento\Framework\Api\SearchResults"/>
+    <preference for="Dealer4Dealer\SubstituteOrders\Api\Data\ShipmentTrackingInterface" type="Dealer4Dealer\SubstituteOrders\Model\ShipmentTracking"/>
+    <preference for="Dealer4Dealer\SubstituteOrders\Api\ShipmentManagementInterface" type="Dealer4Dealer\SubstituteOrders\Model\ShipmentManagement"/>
+    
+    <!--Attachment repository-->
+    <preference for="Dealer4Dealer\SubstituteOrders\Api\AttachmentRepositoryInterface" type="Dealer4Dealer\SubstituteOrders\Model\AttachmentRepository"/>
+    <preference for="Dealer4Dealer\SubstituteOrders\Api\Data\AttachmentInterface" type="Dealer4Dealer\SubstituteOrders\Model\Attachment"/>
+    <preference for="Dealer4Dealer\SubstituteOrders\Api\Data\AttachmentSearchResultsInterface" type="Magento\Framework\Api\SearchResults"/>
+    <preference for="Dealer4Dealer\SubstituteOrders\Api\Data\File\ContentInterface" type="Dealer4Dealer\SubstituteOrders\Model\File\Content" />
+    <preference for="Dealer4Dealer\SubstituteOrders\Api\Data\File\ContentUploaderInterface" type="Dealer4Dealer\SubstituteOrders\Model\File\ContentUploader" />
+
+    <preference for="Dealer4Dealer\SubstituteOrders\Api\Data\OrderInvoiceRelationInterface" type="Dealer4Dealer\SubstituteOrders\Model\OrderInvoiceRelation"/>
+	
+	<virtualType name="Dealer4Dealer\SubstituteOrders\Model\ResourceModel\Order\Grid\Collection" type="Magento\Framework\View\Element\UiComponent\DataProvider\SearchResult">
+        <arguments>
+            <argument name="mainTable" xsi:type="string">dealer4dealer_order</argument>
+            <argument name="resourceModel" xsi:type="string">Dealer4Dealer\SubstituteOrders\Model\ResourceModel\Order\Collection</argument>
+        </arguments>
+    </virtualType>
+    <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
+        <arguments>
+            <argument name="collections" xsi:type="array">
+                <item name="dealer4dealer_order_grid_data_source" xsi:type="string">Dealer4Dealer\SubstituteOrders\Model\ResourceModel\Order\Grid\Collection</item>
+            </argument>
+        </arguments>
+    </type>
+</config>

@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © 2013-2017 Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+
+    <!-- Update handles -->
+    <update handle="substituteorder.order.print.renderers"/>
+    <update handle="substitute_order_item_price"/>
+    <update handle="print" />
+
+    <!-- Modify elements -->
+    <body>
+        <attribute name="class" value="account"/>
+        <referenceContainer name="page.main.title">
+            <block class="Dealer4Dealer\SubstituteOrders\Block\Order\PrintShipment" name="order.status" template="Dealer4Dealer_SubstituteOrders::order/order_status.phtml" />
+            <block class="Dealer4Dealer\SubstituteOrders\Block\Order\PrintShipment" name="order.date" template="Dealer4Dealer_SubstituteOrders::order/order_date.phtml" />
+        </referenceContainer>
+        <referenceContainer name="content">
+            <block class="Dealer4Dealer\SubstituteOrders\Block\Order\PrintShipment" name="sales.order.print" template="Dealer4Dealer_SubstituteOrders::order/view.phtml">
+                <block class="Dealer4Dealer\SubstituteOrders\Block\Order\PrintShipment" name="substituteorder.order.items" template="Dealer4Dealer_SubstituteOrders::order/items.phtml">
+                    <block class="Dealer4Dealer\SubstituteOrders\Block\Order\Item\Renderer\DefaultRenderer" name="substituteorder.order.print.renderers" as="renderer.list" cacheable="false" template="Dealer4Dealer_SubstituteOrders::order/items/renderer/default.phtml" />
+                    <block class="Dealer4Dealer\SubstituteOrders\Block\Order\Totals" name="substituteorder.order.totals" template="Dealer4Dealer_SubstituteOrders::order/totals.phtml">
+                        <arguments>
+                            <argument name="label_properties" xsi:type="string">colspan="4" class="mark"</argument>
+                            <argument name="value_properties" xsi:type="string">class="amount"</argument>
+                        </arguments>
+                        <block class="Magento\Tax\Block\Sales\Order\Tax" name="tax" template="Dealer4Dealer_SubstituteOrders::order/tax.phtml"/>
+                    </block>
+                </block>
+            </block>
+            <block class="Dealer4Dealer\SubstituteOrders\Block\Order\Info" as="sales.order.print.info" name="sales.order.print.info" template="Dealer4Dealer_SubstituteOrders::order/info.phtml"/>
+        </referenceContainer>
+        <block class="Magento\Framework\View\Element\Template" name="additional.product.info" template="Magento_Theme::template.phtml"/>
+    </body>
+</page>

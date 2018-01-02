@@ -1,0 +1,56 @@
+<?php
+/**
+ * A Magento 2 module named Dealer4Dealer\SubstituteOrders
+ * Copyright (C) 2017 Maikel Martens
+ *
+ * This file is part of Dealer4Dealer\SubstituteOrders.
+ *
+ * Dealer4Dealer\SubstituteOrders is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
+ *
+ * @codingStandardsIgnoreFile
+ */
+
+?>
+<?php /** @var  $block \Magento\Sales\Block\Order\View*/?>
+<div class="order-details-items ordered">
+    <?php $_order = $block->getOrder() ?>
+
+    <div class="order-title">
+        <strong><?php /* @escapeNotVerified */ echo __('Items Ordered') ?></strong>
+    </div>
+
+    <?php echo $block->getChildHtml('substituteorder.order.items') ?>
+
+    <?php if ($this->helper('Magento\GiftMessage\Helper\Message')->isMessagesAllowed('order', $_order) && $_order->getGiftMessageId()): ?>
+    <div class="block block-order-details-gift-message">
+        <div class="block-title"><strong><?php /* @escapeNotVerified */ echo __('Gift Message for This Order') ?></strong></div>
+        <?php $_giftMessage = $this->helper('Magento\GiftMessage\Helper\Message')->getGiftMessageForEntity($_order); ?>
+        <div class="block-content">
+            <dl class="item-options">
+                <dt class="item-sender"><strong class="label"><?php /* @escapeNotVerified */ echo __('From') ?></strong><?php echo $block->escapeHtml($_giftMessage->getSender()) ?></dt>
+                <dt class="item-recipient"><strong class="label"><?php /* @escapeNotVerified */ echo __('To') ?></strong><?php echo $block->escapeHtml($_giftMessage->getRecipient()) ?></dt>
+                <dd class="item-message"><?php /* @escapeNotVerified */ echo $this->helper('Magento\GiftMessage\Helper\Message')->getEscapedGiftMessage($_order) ?></dd>
+            </dl>
+        </div>
+    </div>
+    <?php endif; ?>
+
+    <div class="actions-toolbar">
+        <div class="secondary">
+            <a class="action back" href="<?php /* @escapeNotVerified */ echo $block->getBackUrl() ?>">
+                <span><?php /* @escapeNotVerified */ echo $block->getBackTitle() ?></span>
+            </a>
+        </div>
+    </div>
+</div>

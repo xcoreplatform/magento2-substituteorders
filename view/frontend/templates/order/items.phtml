@@ -1,0 +1,67 @@
+<?php
+/**
+ * A Magento 2 module named Dealer4Dealer\SubstituteOrders
+ * Copyright (C) 2017 Maikel Martens
+ *
+ * This file is part of Dealer4Dealer\SubstituteOrders.
+ *
+ * Dealer4Dealer\SubstituteOrders is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
+ *
+ * @codingStandardsIgnoreFile
+ */
+
+/* @var $block \Dealer4Dealer\SubstituteOrders\Block\Order\Items */
+
+?>
+<?php $_order = $block->getOrder() ?>
+<?php $_giftMessage; ?>
+<div class="table-wrapper order-items">
+    <table class="data table table-order-items" id="my-orders-table" summary="<?php /* @escapeNotVerified */ echo __('Items Ordered') ?>">
+        <caption class="table-caption"><?php /* @escapeNotVerified */ echo __('Items Ordered') ?></caption>
+        <thead>
+            <tr>
+                <th class="col name"><?php /* @escapeNotVerified */ echo __('Product Name') ?></th>
+                <th class="col sku"><?php /* @escapeNotVerified */ echo __('SKU') ?></th>
+                <th class="col price"><?php /* @escapeNotVerified */ echo __('Price') ?></th>
+                <th class="col qty"><?php /* @escapeNotVerified */ echo __('Qty') ?></th>
+                <th class="col subtotal"><?php /* @escapeNotVerified */ echo __('Subtotal') ?></th>
+            </tr>
+        </thead>
+        <?php $_items = $_order->getItems(); ?>
+        <?php $_index = 0; ?>
+        <?php $_count = count($_items); ?>
+        <?php $_giftMessage = ''?>
+        <?php foreach ($_items as $_item): ?>
+            <tbody>
+                <?php if($itemRenderBlock = $block->getChildBlock('renderer.list')): ?>
+                    <?php $itemRenderBlock->setData('item', $_item) ?>
+                    <?php echo $block->getChildHtml('renderer.list', false); ?>
+                <?php endif; ?>
+            </tbody>
+        <?php endforeach; ?>
+        <tfoot>
+            <?php echo $block->getChildHtml('substituteorder.order.totals') ?>
+        </tfoot>
+    </table>
+</div>
+<?php echo $block->getOrderAttachmentHtml($_order); ?>
+<?php if ($_giftMessage): ?>
+<script type="text/x-magento-init">
+    {
+        "a.action.show, a.action.close": {
+            "giftMessage": {}
+        }
+    }
+</script>
+<?php endif; ?>

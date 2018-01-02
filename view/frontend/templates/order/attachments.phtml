@@ -1,0 +1,29 @@
+<?php
+
+/* @var $block \Dealer4Dealer\SubstituteOrders\Block\Order\Attachment */
+$attachments = $block->getAttachments();
+
+?>
+
+<?php if ($block->hasAttachments()) : ?>
+    <div class="table-wrapper attachment-items">
+        <table class="data table table-attachment-items" id="substitute-order-attachments" summary="<?php echo $block->getTitle(); ?>">
+            <caption class="table-caption"><?php echo $block->getTitle(); ?></caption>
+            <thead>
+            <tr>
+                <th class="col name"><?php /* @escapeNotVerified */ echo __('Attachments') ?></th>
+            </tr>
+            </thead>
+            <tbody>
+                <?php foreach ($block->getAttachments() as $attachment) : ?>
+                    <?php /* @var $attachment \Dealer4Dealer\SubstituteOrders\Model\Attachment */ ?>
+                    <tr>
+                        <td class="col">
+                            <a href=" <?php echo $attachment->getUrl(); ?>"><?php echo $attachment->getFileName(); ?></a>
+                        </td>
+                    </tr>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+    </div>
+<?php endif; ?>

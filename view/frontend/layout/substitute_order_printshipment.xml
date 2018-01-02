@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © 2013-2017 Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+
+    <update handle="print" />
+
+    <body>
+        <attribute name="class" value="account"/>
+        <referenceContainer name="page.main.title">
+            <block class="Dealer4Dealer\SubstituteOrders\Block\Order\PrintOrder\Shipment" name="order.status" template="Dealer4Dealer_SubstituteOrders::order/order_status.phtml" />
+            <block class="Dealer4Dealer\SubstituteOrders\Block\Order\PrintOrder\Shipment" name="order.date" template="Dealer4Dealer_SubstituteOrders::order/order_date.phtml" />
+        </referenceContainer>
+        <referenceContainer name="content">
+            <block class="Dealer4Dealer\SubstituteOrders\Block\Order\PrintOrder\Shipment" name="substituteorder.order.print.shipment" template="Dealer4Dealer_SubstituteOrders::order/print/shipment.phtml">
+                <block class="Dealer4Dealer\SubstituteOrders\Block\Order\Item\Renderer\DefaultRenderer" name="substituteorder.order.print.shipment.renderers" as="renderer.list" cacheable="false" template="Dealer4Dealer_SubstituteOrders::order/items/renderer/default.phtml"/>
+            </block>
+        </referenceContainer>
+        <block class="Magento\Framework\View\Element\Template" name="additional.product.info" template="Magento_Theme::template.phtml"/>
+    </body>
+</page>

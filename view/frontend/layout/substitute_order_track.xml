@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © 2013-2017 Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+
+    <!-- Update handles -->
+    <update handle="print" />
+
+    <!-- Modify elements -->
+    <body>
+        <referenceContainer name="content">
+            <block class="Dealer4Dealer\SubstituteOrders\Block\Order\Track" name="sales.order.track"  template="Dealer4Dealer_SubstituteOrders::order/track.phtml" />
+        </referenceContainer>
+    </body>
+</page>

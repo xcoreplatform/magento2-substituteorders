@@ -1,0 +1,45 @@
+<?xml version="1.0" ?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+
+    <!-- Remove blocks -->
+    <referenceBlock name="sales.order.info.links" remove="true" />
+
+    <!-- Update handles -->
+    <update handle="customer_account"/>
+    <update handle="substitute_order_info_links"/>
+
+    <!-- Modify elements -->
+    <body>
+        <referenceContainer name="page.main.title">
+            <block class="Dealer4Dealer\SubstituteOrders\Block\Order\Info" name="order.status" template="Dealer4Dealer_SubstituteOrders::order/order_status.phtml"/>
+            <block class="Dealer4Dealer\SubstituteOrders\Block\Order\Info" name="order.date" template="Dealer4Dealer_SubstituteOrders::order/order_date.phtml"/>
+            <container name="order.actions.container" htmlTag="div" htmlClass="actions-toolbar order-actions-toolbar">
+                <block class="Dealer4Dealer\SubstituteOrders\Block\Order\Info\Buttons" as="buttons" name="substituteorder.order.info.buttons" cacheable="false"/>
+            </container>
+        </referenceContainer>
+
+        <referenceContainer name="substituteorder.order.info.buttons">
+            <block class="Dealer4Dealer\SubstituteOrders\Block\Order\Info\Buttons\Rss" as="buttons.rss" name="substituteorder.order.info.buttons.rss" cacheable="false"/>
+        </referenceContainer>
+
+        <referenceContainer name="content">
+            <block class="Dealer4Dealer\SubstituteOrders\Block\Order\View" name="substituteorder.order.comments" template="Dealer4Dealer_SubstituteOrders::order/order_comments.phtml" before="substituteorder.order.info.links"/>
+            <block class="Dealer4Dealer\SubstituteOrders\Block\Order\View" name="substituteorder.order.view" cacheable="false" after="substituteorder.order.info.links">
+                <block class="Dealer4Dealer\SubstituteOrders\Block\Order\Items" name="substituteorder.order.items" template="Dealer4Dealer_SubstituteOrders::order/items.phtml">
+                    <block class="Magento\Framework\View\Element\Template" name="substituteorder.order.items.renderer" as="renderer.list" template="Dealer4Dealer_SubstituteOrders::order/items/renderer/default.phtml" />
+                    <block class="Dealer4Dealer\SubstituteOrders\Block\Order\Totals" name="substituteorder.order.totals" template="Dealer4Dealer_SubstituteOrders::order/totals.phtml">
+                        <arguments>
+                            <argument name="label_properties" xsi:type="string">colspan="4" class="mark"</argument>
+                            <argument name="value_properties" xsi:type="string">class="amount"</argument>
+                        </arguments>
+                        <block class="Magento\Tax\Block\Sales\Order\Tax" name="tax" template="Dealer4Dealer_SubstituteOrders::order/tax.phtml"/>
+                    </block>
+                    <block class="Dealer4Dealer\SubstituteOrders\Block\Order\Attachment" name="order_attachments" template="Dealer4Dealer_SubstituteOrders::order/attachments.phtml"/>
+                </block>
+            </block>
+            <block class="Dealer4Dealer\SubstituteOrders\Block\Order\Info" as="info" name="substituteorder.order.info" after="substituteorder.order.view"/>
+        </referenceContainer>
+
+        <block class="Magento\Framework\View\Element\Template" name="additional.product.info" template="Magento_Theme::template.phtml"/>
+    </body>
+</page>
