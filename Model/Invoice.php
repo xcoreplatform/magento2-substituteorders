@@ -751,7 +751,7 @@ class Invoice extends \Magento\Framework\Model\AbstractModel implements InvoiceI
     /**
      * @inheritDoc
      */
-    public function getAttachements()
+    public function getAttachments()
     {
         if ($this->_attachments == null) {
             $attachments = $this->attachmentRepository->getAttachmentsByEntityTypeIdentifier(
