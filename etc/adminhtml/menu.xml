@@ -1,11 +1,14 @@
 <?xml version="1.0" ?>
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
 	<menu>
+
+		<add id="Dealer4Dealer::substitute_order" module="Dealer4Dealer_SubstituteOrder" resource="Magento_Backend::content" sortOrder="9999" title="Dealer4Dealer"/>
+
 		<add id="Dealer4Dealer_SubstituteOrders::core"
-			 title="Substitutes"
+			 title="Substitute Orders"
 			 module="Dealer4Dealer_SubstituteOrders"
 			 sortOrder="99"
-			 parent="Dealer4Dealer_Core::core"
+			 parent="Dealer4Dealer::substitute_order"
 			 dependsOnModule="Dealer4Dealer_SubstituteOrders"
 			 resource="Magento_Backend::content"/>
 
