@@ -218,6 +218,19 @@ class DatePickerField extends \Magento\Customer\Block\Widget\AbstractWidget
     }
 
     /**
+     * Escape a string for the HTML attribute context
+     *
+     * @param string $string
+     * @param boolean $escapeSingleQuote
+     * @return string
+     * @since 100.2.0
+     */
+    public function escapeHtmlAttr($string, $escapeSingleQuote = true)
+    {
+        return $this->_escaper->escapeHtmlAttr($string, $escapeSingleQuote);
+    }
+
+    /**
      * Returns format which will be applied for DOB in javascript
      *
      * @return string
