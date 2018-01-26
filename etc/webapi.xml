@@ -38,7 +38,7 @@
 	</route>
 
 
-	<route method="GET" url="/V1/dealer4dealer-substituteorders/invoice:id">
+	<route method="GET" url="/V1/dealer4dealer-substituteorders/invoice/:id">
 		<service class="Dealer4Dealer\SubstituteOrders\Api\InvoiceManagementInterface" method="getInvoice"/>
 		<resources>
 			<resource ref="Dealer4Dealer_SubstituteOrders::Invoice_save"/>
@@ -56,7 +56,7 @@
 			<resource ref="Dealer4Dealer_SubstituteOrders::Invoice_save"/>
 		</resources>
 	</route>
-	<route method="DELETE" url="/V1/dealer4dealer-substituteorders/invoice:id">
+	<route method="DELETE" url="/V1/dealer4dealer-substituteorders/invoice/:id">
 		<service class="Dealer4Dealer\SubstituteOrders\Api\InvoiceManagementInterface" method="deleteInvoice"/>
 		<resources>
 			<resource ref="Dealer4Dealer_SubstituteOrders::Invoice_save"/>
@@ -64,7 +64,7 @@
 	</route>
 
 
-	<route method="GET" url="/V1/dealer4dealer-substituteorders/shipment:id">
+	<route method="GET" url="/V1/dealer4dealer-substituteorders/shipment/:id">
 		<service class="Dealer4Dealer\SubstituteOrders\Api\ShipmentManagementInterface" method="getShipment"/>
 		<resources>
 			<resource ref="Dealer4Dealer_SubstituteOrders::Shipment_view"/>
@@ -82,7 +82,7 @@
 			<resource ref="Dealer4Dealer_SubstituteOrders::Shipment_update"/>
 		</resources>
 	</route>
-	<route method="DELETE" url="/V1/dealer4dealer-substituteorders/shipment:id">
+	<route method="DELETE" url="/V1/dealer4dealer-substituteorders/shipment/:id">
 		<service class="Dealer4Dealer\SubstituteOrders\Api\ShipmentManagementInterface" method="deleteShipment"/>
 		<resources>
 			<resource ref="Dealer4Dealer_SubstituteOrders::Shipment_delete"/>
