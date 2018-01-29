@@ -17,9 +17,6 @@
         }
     ],
     "minimum-stability": "dev",
-    "require": {
-        "dealer4dealer/module-core": "~1.0.4"
-    },
     "autoload": {
         "psr-4": {
             "Dealer4Dealer\\SubstituteOrders\\": ""
