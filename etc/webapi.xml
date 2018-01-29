@@ -47,7 +47,7 @@
 	<route method="GET" url="/V1/dealer4dealer-substituteorders/invoice/extorder/:id">
 		<service class="Dealer4Dealer\SubstituteOrders\Api\InvoiceManagementInterface" method="getInvoiceByExt"/>
 		<resources>
-			<resource ref="Dealer4Dealer_SubstituteOrders::Order"/>
+			<resource ref="Dealer4Dealer_SubstituteOrders::Invoice_save"/>
 		</resources>
 	</route>
 	<route method="POST" url="/V1/dealer4dealer-substituteorders/invoice">
@@ -79,7 +79,7 @@
 	<route method="GET" url="/V1/dealer4dealer-substituteorders/shipment/extorder/:id">
 		<service class="Dealer4Dealer\SubstituteOrders\Api\ShipmentManagementInterface" method="getShipmentByExt"/>
 		<resources>
-			<resource ref="Dealer4Dealer_SubstituteOrders::Order"/>
+			<resource ref="Dealer4Dealer_SubstituteOrders::Shipment_save"/>
 		</resources>
 	</route>
 	<route method="POST" url="/V1/dealer4dealer-substituteorders/shipment">
