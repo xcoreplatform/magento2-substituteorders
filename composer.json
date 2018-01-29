@@ -8,8 +8,12 @@
             "email": "info@mage2gen.com"
         },
         {
-            "name": "Robbert Stevens",
-            "email": "robbert.stevens@dealer4dealer.nl"
+            "name": "Derrick Heesbeen",
+            "email": "derrick@experius.nl"
+        },
+        {
+            "name": "Daniel Oldermsa",
+            "email": "d.oldersma@dealer4dealer.nl"
         }
     ],
     "minimum-stability": "dev",
