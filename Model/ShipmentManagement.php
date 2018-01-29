@@ -68,6 +68,20 @@ class ShipmentManagement
     /**
      * {@inheritdoc}
      */
+    public function getShipmentByExt($id)
+    {
+        $shipment = $this->shipmentFactory->create()->load($id, "ext_shipment_id");
+
+        if (!$shipment->getId()) {
+            throw new NoSuchEntityException(__('Shipment with ext_shipment_id "%1" does not exist.', $id));
+        }
+
+        return $shipment;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function postShipment($shipment)
     {
         $shipment->setId(null);

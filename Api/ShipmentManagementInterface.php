@@ -31,6 +31,14 @@ interface ShipmentManagementInterface
     public function getShipment($id);
 
     /**
+     * GET for Shipment api
+     * @param string $id
+     * @return \Dealer4Dealer\SubstituteOrders\Api\Data\ShipmentInterface
+     */
+    public function getShipmentByExt($id);
+
+
+    /**
      * POST for Shipment api
      * @param \Dealer4Dealer\SubstituteOrders\Api\Data\ShipmentInterface $shipment
      * @return int

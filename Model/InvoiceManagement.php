@@ -75,6 +75,20 @@ class InvoiceManagement
     /**
      * {@inheritdoc}
      */
+    public function getInvoiceByExt($id)
+    {
+        $invoice = $this->invoiceFactory->create()->load($id, "ext_invoice_id");
+
+        if (!$invoice->getId()) {
+            throw new NoSuchEntityException(__('Invoice with ext_invoice_id "%1" does not exist.', $id));
+        }
+
+        return $invoice;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function postInvoice($invoice)
     {
         $invoice->setId(null);

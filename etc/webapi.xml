@@ -12,13 +12,13 @@
 			<resource ref="Dealer4Dealer_SubstituteOrders::Order"/>
 		</resources>
 	</route>
-	<route method="GET" url="/V1/dealer4dealer-substituteorders/magentoorder/:id">
+	<route method="GET" url="/V1/dealer4dealer-substituteorders/order/magentoorder/:id">
 		<service class="Dealer4Dealer\SubstituteOrders\Api\OrderManagementInterface" method="getOrderByMagento"/>
 		<resources>
 			<resource ref="Dealer4Dealer_SubstituteOrders::Order"/>
 		</resources>
 	</route>
-	<route method="GET" url="/V1/dealer4dealer-substituteorders/extorder/:id">
+	<route method="GET" url="/V1/dealer4dealer-substituteorders/order/extorder/:id">
 		<service class="Dealer4Dealer\SubstituteOrders\Api\OrderManagementInterface" method="getOrderByExt"/>
 		<resources>
 			<resource ref="Dealer4Dealer_SubstituteOrders::Order"/>
@@ -42,6 +42,12 @@
 		<service class="Dealer4Dealer\SubstituteOrders\Api\InvoiceManagementInterface" method="getInvoice"/>
 		<resources>
 			<resource ref="Dealer4Dealer_SubstituteOrders::Invoice_save"/>
+		</resources>
+	</route>
+	<route method="GET" url="/V1/dealer4dealer-substituteorders/invoice/extorder/:id">
+		<service class="Dealer4Dealer\SubstituteOrders\Api\InvoiceManagementInterface" method="getInvoiceByExt"/>
+		<resources>
+			<resource ref="Dealer4Dealer_SubstituteOrders::Order"/>
 		</resources>
 	</route>
 	<route method="POST" url="/V1/dealer4dealer-substituteorders/invoice">
@@ -68,6 +74,12 @@
 		<service class="Dealer4Dealer\SubstituteOrders\Api\ShipmentManagementInterface" method="getShipment"/>
 		<resources>
 			<resource ref="Dealer4Dealer_SubstituteOrders::Shipment_view"/>
+		</resources>
+	</route>
+	<route method="GET" url="/V1/dealer4dealer-substituteorders/shipment/extorder/:id">
+		<service class="Dealer4Dealer\SubstituteOrders\Api\ShipmentManagementInterface" method="getShipmentByExt"/>
+		<resources>
+			<resource ref="Dealer4Dealer_SubstituteOrders::Order"/>
 		</resources>
 	</route>
 	<route method="POST" url="/V1/dealer4dealer-substituteorders/shipment">

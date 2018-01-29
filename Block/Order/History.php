@@ -102,14 +102,18 @@ class History extends \Magento\Framework\View\Element\Template
         }
 
         if ($this->getRequest()->getParam('q')) {
+            $query = $this->getRequest()->getParam('q');
+
             $collection->addFieldToFilter(
                 [
                     'po_number',
-                    'magento_increment_id'
+                    'magento_increment_id',
+                    'ext_order_id'
                 ],
                 [
-                    ['like' => '%' . $this->getRequest()->getParam('q') . '%'],
-                    ['like' => '%' . $this->getRequest()->getParam('q') . '%']
+                    ['like' => '%' . $query . '%'],
+                    ['like' => '%' . $query . '%'],
+                    ['like' => '%' . $query . '%']
                 ]
             );
         }

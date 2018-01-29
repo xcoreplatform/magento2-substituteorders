@@ -31,6 +31,13 @@ interface InvoiceManagementInterface
     public function getInvoice($id);
 
     /**
+     * GET for Invoice api
+     * @param string $id
+     * @return \Dealer4Dealer\SubstituteOrders\Api\Data\InvoiceInterface
+     */
+    public function getInvoiceByExt($id);
+
+    /**
      * POST for Invoice api
      * @param \Dealer4Dealer\SubstituteOrders\Api\Data\InvoiceInterface $invoice
      * @return int
