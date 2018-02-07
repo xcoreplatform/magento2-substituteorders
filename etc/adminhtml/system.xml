@@ -1,9 +1,12 @@
 <?xml version="1.0" ?>
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
     <system>
+        <tab id="dealer4dealer" sortOrder="999" translate="label">
+            <label>Dealer4Dealer</label>
+        </tab>
         <section id="substitute" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="label">
             <tab>dealer4dealer</tab>
-            <label>Substitute</label>
+            <label>Substitute Orders</label>
             <resource>Dealer4Dealer_SubstituteOrders::config_dealer4dealer_substituteorders</resource>
             <group id="general" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="label">
                 <label>General</label>
