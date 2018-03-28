@@ -23,7 +23,7 @@ namespace Dealer4Dealer\SubstituteOrders\Model;
 
 use Magento\Framework\Exception\NoSuchEntityException;
 
-class OrderManagement
+class OrderManagement implements \Dealer4Dealer\SubstituteOrders\Api\OrderManagementInterface
 {
     /*
      * @var \Dealer4Dealer\SubstituteOrders\Model\OrderFactory
@@ -45,6 +45,11 @@ class OrderManagement
      */
     protected $attachmentRepository;
 
+    /*
+     * @var \Dealer4Dealer\SubstituteOrders\Model\OrderRepository
+     */
+    protected $orderRepository;
+
     /**
      * OrderManagement constructor.
      * @param OrderFactory $orderFactory
@@ -56,13 +61,15 @@ class OrderManagement
         \Dealer4Dealer\SubstituteOrders\Model\OrderFactory $orderFactory,
         \Dealer4Dealer\SubstituteOrders\Model\OrderAddressFactory $addressFactory,
         \Dealer4Dealer\SubstituteOrders\Model\OrderItemFactory $orderItemFactory,
-        \Dealer4Dealer\SubstituteOrders\Model\AttachmentRepository $attachmentRepository
+        \Dealer4Dealer\SubstituteOrders\Model\AttachmentRepository $attachmentRepository,
+        \Dealer4Dealer\SubstituteOrders\Model\OrderRepository $orderRepository
     ) {
     
         $this->orderFactory = $orderFactory;
         $this->addressFactory = $addressFactory;
         $this->orderItemFactory = $orderItemFactory;
         $this->attachmentRepository = $attachmentRepository;
+        $this->orderRepository = $orderRepository;
     }
 
     /**
@@ -106,6 +113,19 @@ class OrderManagement
         return $order;
     }
 
+    /**
+     * {@inheritdoc}
+     */
+    public function getOrderByMagentoIncrementId($id)
+    {
+        $order = $this->orderFactory->create()->load($id, "magento_increment_id");
+
+        if (!$order->getId()) {
+            throw new NoSuchEntityException(__('Order with magento_increment_id "%1" does not exist.', $id));
+        }
+
+        return $order;
+    }
 
     /**
      * {@inheritdoc}
@@ -181,5 +201,14 @@ class OrderManagement
                 $order->getFileContent()
             );
         }
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getList(
+        \Magento\Framework\Api\SearchCriteriaInterface $searchCriteria
+    ) {
+        return $this->orderRepository->getList($searchCriteria);
     }
 }

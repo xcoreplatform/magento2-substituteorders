@@ -23,7 +23,7 @@ namespace Dealer4Dealer\SubstituteOrders\Model;
 
 use Magento\Framework\Exception\NoSuchEntityException;
 
-class InvoiceManagement
+class InvoiceManagement implements \Dealer4Dealer\SubstituteOrders\Api\InvoiceManagementInterface
 {
 
     /**
@@ -46,16 +46,23 @@ class InvoiceManagement
     */
     protected $attachmentRepository;
 
+    /*
+    * @var \Dealer4Dealer\SubstituteOrders\Model\InvoiceRepository
+    */
+    protected $invoiceRepository;
+
     public function __construct(
         \Dealer4Dealer\SubstituteOrders\Model\InvoiceFactory $invoiceFactory,
         \Dealer4Dealer\SubstituteOrders\Model\OrderAddressFactory $addressFactory,
         \Dealer4Dealer\SubstituteOrders\Model\InvoiceItemFactory $invoiceItemFactory,
-        \Dealer4Dealer\SubstituteOrders\Model\AttachmentRepository $attachmentRepository
+        \Dealer4Dealer\SubstituteOrders\Model\AttachmentRepository $attachmentRepository,
+        \Dealer4Dealer\SubstituteOrders\Model\InvoiceRepository $invoiceRepository
     ) {
         $this->invoiceFactory = $invoiceFactory;
         $this->addressFactory = $addressFactory;
         $this->invoiceItemFactory = $invoiceItemFactory;
         $this->attachmentRepository = $attachmentRepository;
+        $this->invoiceRepository = $invoiceRepository;
     }
 
     /**
@@ -81,6 +88,34 @@ class InvoiceManagement
 
         if (!$invoice->getId()) {
             throw new NoSuchEntityException(__('Invoice with ext_invoice_id "%1" does not exist.', $id));
+        }
+
+        return $invoice;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getInvoiceByMagento($id)
+    {
+        $invoice = $this->invoiceFactory->create()->load($id, "magento_invoice_id");
+
+        if (!$invoice->getId()) {
+            throw new NoSuchEntityException(__('Invoice with magento_invoice_id "%1" does not exist.', $id));
+        }
+
+        return $invoice;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getInvoiceByMagentoIncrementId($id)
+    {
+        $invoice = $this->invoiceFactory->create()->load($id, "magento_increment_id");
+
+        if (!$invoice->getId()) {
+            throw new NoSuchEntityException(__('Invoice with magento_increment_id "%1" does not exist.', $id));
         }
 
         return $invoice;
@@ -152,5 +187,14 @@ class InvoiceManagement
                 $invoice->getFileContent()
             );
         }
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getList(
+        \Magento\Framework\Api\SearchCriteriaInterface $searchCriteria
+    ) {
+        return $this->invoiceRepository->getList($searchCriteria);
     }
 }

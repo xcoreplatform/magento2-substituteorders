@@ -24,19 +24,25 @@ namespace Dealer4Dealer\SubstituteOrders\Api;
 interface ShipmentManagementInterface
 {
     /**
-     * GET for Shipment api
+     * GET shipment by shipment_id
      * @param string $id
      * @return \Dealer4Dealer\SubstituteOrders\Api\Data\ShipmentInterface
      */
     public function getShipment($id);
 
     /**
-     * GET for Shipment api
+     * GET shipment by ext_shipment_id
      * @param string $id
      * @return \Dealer4Dealer\SubstituteOrders\Api\Data\ShipmentInterface
      */
     public function getShipmentByExt($id);
 
+    /**
+     * GET shipment by magento_increment_id
+     * @param string $id
+     * @return \Dealer4Dealer\SubstituteOrders\Api\Data\ShipmentInterface
+     */
+    public function getShipmentByMagentoIncrement($id);
 
     /**
      * POST for Shipment api
@@ -58,4 +64,14 @@ interface ShipmentManagementInterface
      * @return boolean
      */
     public function deleteShipment($id);
+
+    /**
+     * Retrieve Shipment matching the specified criteria.
+     * @param \Magento\Framework\Api\SearchCriteriaInterface $searchCriteria
+     * @return \Dealer4Dealer\SubstituteOrders\Api\Data\ShipmentSearchResultsInterface
+     * @throws \Magento\Framework\Exception\LocalizedException
+     */
+    public function getList(
+        \Magento\Framework\Api\SearchCriteriaInterface $searchCriteria
+    );
 }

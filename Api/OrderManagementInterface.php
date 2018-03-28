@@ -33,25 +33,32 @@ interface OrderManagementInterface
     public function postOrder($order);
 
     /**
-     * GET for order api
+     * GET order by order_id
      * @param string $id
      * @return \Dealer4Dealer\SubstituteOrders\Api\Data\OrderInterface
      */
     public function getOrder($id);
 
     /**
-     * GET for magento order api
+     * GET order by magento_order_id
      * @param string $id
      * @return \Dealer4Dealer\SubstituteOrders\Api\Data\OrderInterface
      */
     public function getOrderByMagento($id);
 
     /**
-     * GET for ext order api
+     * GET order by ext_order_id
      * @param string $id
      * @return \Dealer4Dealer\SubstituteOrders\Api\Data\OrderInterface
      */
     public function getOrderByExt($id);
+
+    /**
+     * GET order by magento_increment_id
+     * @param string $id
+     * @return \Dealer4Dealer\SubstituteOrders\Api\Data\OrderInterface
+     */
+    public function getOrderByMagentoIncrementId($id);
 
     /**
      * PUT for order api
@@ -66,4 +73,14 @@ interface OrderManagementInterface
      * @return boolean
      */
     public function deleteOrder($id);
+
+    /**
+     * Retrieve Order matching the specified criteria.
+     * @param \Magento\Framework\Api\SearchCriteriaInterface $searchCriteria
+     * @return \Dealer4Dealer\SubstituteOrders\Api\Data\OrderSearchResultsInterface
+     * @throws \Magento\Framework\Exception\LocalizedException
+     */
+    public function getList(
+        \Magento\Framework\Api\SearchCriteriaInterface $searchCriteria
+    );
 }

@@ -23,7 +23,7 @@ namespace Dealer4Dealer\SubstituteOrders\Model;
 
 use Magento\Framework\Exception\NoSuchEntityException;
 
-class ShipmentManagement
+class ShipmentManagement implements \Dealer4Dealer\SubstituteOrders\Api\ShipmentManagementInterface
 {
 
     /*
@@ -41,14 +41,21 @@ class ShipmentManagement
     */
     protected $attachmentRepository;
 
+    /*
+    * @var \Dealer4Dealer\SubstituteOrders\Model\ShipmentRepository
+    */
+    protected $shipmentRepository;
+
     public function __construct(
         \Dealer4Dealer\SubstituteOrders\Model\ShipmentFactory $shipmentFactory,
         \Dealer4Dealer\SubstituteOrders\Model\OrderAddressFactory $addressFactory,
-        \Dealer4Dealer\SubstituteOrders\Model\AttachmentRepository $attachmentRepository
+        \Dealer4Dealer\SubstituteOrders\Model\AttachmentRepository $attachmentRepository,
+        \Dealer4Dealer\SubstituteOrders\Model\ShipmentRepository $shipmentRepository
     ) {
         $this->shipmentFactory = $shipmentFactory;
         $this->addressFactory = $addressFactory;
         $this->attachmentRepository = $attachmentRepository;
+        $this->shipmentRepository = $shipmentRepository;
     }
 
     /**
@@ -74,6 +81,20 @@ class ShipmentManagement
 
         if (!$shipment->getId()) {
             throw new NoSuchEntityException(__('Shipment with ext_shipment_id "%1" does not exist.', $id));
+        }
+
+        return $shipment;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getShipmentByMagentoIncrement($id)
+    {
+        $shipment = $this->shipmentFactory->create()->load($id, "increment_id");
+
+        if (!$shipment->getId()) {
+            throw new NoSuchEntityException(__('Shipment with increment_id "%1" does not exist.', $id));
         }
 
         return $shipment;
@@ -146,5 +167,14 @@ class ShipmentManagement
                 $shipment->getFileContent()
             );
         }
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getList(
+        \Magento\Framework\Api\SearchCriteriaInterface $searchCriteria
+    ) {
+        return $this->shipmentRepository->getList($searchCriteria);
     }
 }

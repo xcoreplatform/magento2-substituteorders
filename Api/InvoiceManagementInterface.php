@@ -24,18 +24,32 @@ namespace Dealer4Dealer\SubstituteOrders\Api;
 interface InvoiceManagementInterface
 {
     /**
-     * GET for Invoice api
+     * GET Invoice by invoice_id
      * @param string $id
      * @return \Dealer4Dealer\SubstituteOrders\Api\Data\InvoiceInterface
      */
     public function getInvoice($id);
 
     /**
-     * GET for Invoice api
+     * GET Invoice by ext_invoice_id
      * @param string $id
      * @return \Dealer4Dealer\SubstituteOrders\Api\Data\InvoiceInterface
      */
     public function getInvoiceByExt($id);
+
+    /**
+     * GET Invoice by magento_invoice_id
+     * @param string $id
+     * @return \Dealer4Dealer\SubstituteOrders\Api\Data\InvoiceInterface
+     */
+    public function getInvoiceByMagento($id);
+
+    /**
+     * GET Invoice by magento_increment_id
+     * @param string $id
+     * @return \Dealer4Dealer\SubstituteOrders\Api\Data\InvoiceInterface
+     */
+    public function getInvoiceByMagentoIncrementId($id);
 
     /**
      * POST for Invoice api
@@ -57,4 +71,14 @@ interface InvoiceManagementInterface
      * @return boolean
      */
     public function deleteInvoice($id);
+
+    /**
+     * Retrieve Invoice matching the specified criteria.
+     * @param \Magento\Framework\Api\SearchCriteriaInterface $searchCriteria
+     * @return \Dealer4Dealer\SubstituteOrders\Api\Data\InvoiceSearchResultsInterface
+     * @throws \Magento\Framework\Exception\LocalizedException
+     */
+    public function getList(
+        \Magento\Framework\Api\SearchCriteriaInterface $searchCriteria
+    );
 }

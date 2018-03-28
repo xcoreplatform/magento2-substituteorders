@@ -9,19 +9,31 @@
 	<route method="GET" url="/V1/dealer4dealer-substituteorders/order/:id">
 		<service class="Dealer4Dealer\SubstituteOrders\Api\OrderManagementInterface" method="getOrder"/>
 		<resources>
-			<resource ref="Dealer4Dealer_SubstituteOrders::Order"/>
+			<resource ref="Dealer4Dealer_SubstituteOrders::Order_view"/>
 		</resources>
 	</route>
 	<route method="GET" url="/V1/dealer4dealer-substituteorders/order/magentoorder/:id">
 		<service class="Dealer4Dealer\SubstituteOrders\Api\OrderManagementInterface" method="getOrderByMagento"/>
 		<resources>
-			<resource ref="Dealer4Dealer_SubstituteOrders::Order"/>
+			<resource ref="Dealer4Dealer_SubstituteOrders::Order_view"/>
 		</resources>
 	</route>
 	<route method="GET" url="/V1/dealer4dealer-substituteorders/order/extorder/:id">
 		<service class="Dealer4Dealer\SubstituteOrders\Api\OrderManagementInterface" method="getOrderByExt"/>
 		<resources>
-			<resource ref="Dealer4Dealer_SubstituteOrders::Order"/>
+			<resource ref="Dealer4Dealer_SubstituteOrders::Order_view"/>
+		</resources>
+	</route>
+	<route method="GET" url="/V1/dealer4dealer-substituteorders/order/magento-increment-id/:id">
+		<service class="Dealer4Dealer\SubstituteOrders\Api\OrderManagementInterface" method="getOrderByMagentoIncrementId"/>
+		<resources>
+			<resource ref="Dealer4Dealer_SubstituteOrders::Order_view"/>
+		</resources>
+	</route>
+	<route method="GET" url="/V1/dealer4dealer-substituteorders/order/search">
+		<service class="Dealer4Dealer\SubstituteOrders\Api\OrderManagementInterface" method="getList"/>
+		<resources>
+			<resource ref="Dealer4Dealer_SubstituteOrders::Order_view"/>
 		</resources>
 	</route>
 	<route method="PUT" url="/V1/dealer4dealer-substituteorders/order">
@@ -36,18 +48,28 @@
 			<resource ref="Dealer4Dealer_SubstituteOrders::Order_delete"/>
 		</resources>
 	</route>
-
-
 	<route method="GET" url="/V1/dealer4dealer-substituteorders/invoice/:id">
 		<service class="Dealer4Dealer\SubstituteOrders\Api\InvoiceManagementInterface" method="getInvoice"/>
 		<resources>
-			<resource ref="Dealer4Dealer_SubstituteOrders::Invoice_save"/>
+			<resource ref="Dealer4Dealer_SubstituteOrders::Invoice_view"/>
 		</resources>
 	</route>
 	<route method="GET" url="/V1/dealer4dealer-substituteorders/invoice/extorder/:id">
 		<service class="Dealer4Dealer\SubstituteOrders\Api\InvoiceManagementInterface" method="getInvoiceByExt"/>
 		<resources>
-			<resource ref="Dealer4Dealer_SubstituteOrders::Invoice_save"/>
+			<resource ref="Dealer4Dealer_SubstituteOrders::Invoice_view"/>
+		</resources>
+	</route>
+	<route method="GET" url="/V1/dealer4dealer-substituteorders/invoice/magento-increment-id/:id">
+		<service class="Dealer4Dealer\SubstituteOrders\Api\InvoiceManagementInterface" method="getInvoiceByMagentoIncrementId"/>
+		<resources>
+			<resource ref="Dealer4Dealer_SubstituteOrders::Invoice_view"/>
+		</resources>
+	</route>
+	<route method="GET" url="/V1/dealer4dealer-substituteorders/invoice/search">
+		<service class="Dealer4Dealer\SubstituteOrders\Api\InvoiceManagementInterface" method="getList"/>
+		<resources>
+			<resource ref="Dealer4Dealer_SubstituteOrders::Invoice_view"/>
 		</resources>
 	</route>
 	<route method="POST" url="/V1/dealer4dealer-substituteorders/invoice">
@@ -59,17 +81,15 @@
 	<route method="PUT" url="/V1/dealer4dealer-substituteorders/invoice">
 		<service class="Dealer4Dealer\SubstituteOrders\Api\InvoiceManagementInterface" method="putInvoice"/>
 		<resources>
-			<resource ref="Dealer4Dealer_SubstituteOrders::Invoice_save"/>
+			<resource ref="Dealer4Dealer_SubstituteOrders::Invoice_update"/>
 		</resources>
 	</route>
 	<route method="DELETE" url="/V1/dealer4dealer-substituteorders/invoice/:id">
 		<service class="Dealer4Dealer\SubstituteOrders\Api\InvoiceManagementInterface" method="deleteInvoice"/>
 		<resources>
-			<resource ref="Dealer4Dealer_SubstituteOrders::Invoice_save"/>
+			<resource ref="Dealer4Dealer_SubstituteOrders::Invoice_delete"/>
 		</resources>
 	</route>
-
-
 	<route method="GET" url="/V1/dealer4dealer-substituteorders/shipment/:id">
 		<service class="Dealer4Dealer\SubstituteOrders\Api\ShipmentManagementInterface" method="getShipment"/>
 		<resources>
@@ -79,7 +99,19 @@
 	<route method="GET" url="/V1/dealer4dealer-substituteorders/shipment/extorder/:id">
 		<service class="Dealer4Dealer\SubstituteOrders\Api\ShipmentManagementInterface" method="getShipmentByExt"/>
 		<resources>
-			<resource ref="Dealer4Dealer_SubstituteOrders::Shipment_save"/>
+			<resource ref="Dealer4Dealer_SubstituteOrders::Shipment_view"/>
+		</resources>
+	</route>
+	<route method="GET" url="/V1/dealer4dealer-substituteorders/shipment/magento-increment-id/:id">
+		<service class="Dealer4Dealer\SubstituteOrders\Api\ShipmentManagementInterface" method="getShipmentByMagentoIncrement"/>
+		<resources>
+			<resource ref="Dealer4Dealer_SubstituteOrders::Shipment_view"/>
+		</resources>
+	</route>
+	<route method="GET" url="/V1/dealer4dealer-substituteorders/shipment/search">
+		<service class="Dealer4Dealer\SubstituteOrders\Api\ShipmentManagementInterface" method="getList"/>
+		<resources>
+			<resource ref="Dealer4Dealer_SubstituteOrders::Shipment_view"/>
 		</resources>
 	</route>
 	<route method="POST" url="/V1/dealer4dealer-substituteorders/shipment">
@@ -100,7 +132,6 @@
 			<resource ref="Dealer4Dealer_SubstituteOrders::Shipment_delete"/>
 		</resources>
 	</route>
-	
 	<route method="POST" url="/V1/dealer4dealer-substituteorders/attachment">
 		<service class="Dealer4Dealer\SubstituteOrders\Api\AttachmentRepositoryInterface" method="save"/>
 		<resources>
