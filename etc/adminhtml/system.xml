@@ -19,6 +19,11 @@
                     <comment/>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                 </field>
+                <field id="select_orders_by" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="label" type="select">
+                    <label>Show orders by</label>
+                    <comment/>
+                    <source_model>Dealer4Dealer\SubstituteOrders\Model\Config\Source\SelectOrdersBy</source_model>
+                </field>
             </group>
         </section>
     </system>
