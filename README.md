@@ -48,7 +48,7 @@ The substitute order module uses the Magento 2 REST API for CRUD operations on O
         ],
         "magento_order_id": "string",
         "magento_customer_id": "string",
-		"external_customer_id": "string",
+        "external_customer_id": "string",
         "ext_order_id": "string",
         "base_grandtotal": "string",
         "base_subtotal": "string",

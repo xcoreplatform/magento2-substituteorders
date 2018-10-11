@@ -21,9 +21,6 @@
 
 namespace Dealer4Dealer\SubstituteOrders\Block\Order;
 
-use \Magento\Framework\App\ObjectManager;
-use \Magento\Sales\Model\ResourceModel\Order\CollectionFactoryInterface;
-
 /**
  * Substitute Orders history block
  */
@@ -47,15 +44,19 @@ class History extends \Magento\Framework\View\Element\Template
      */
     protected $customerSession;
 
+    /** @var \Magento\Framework\App\Config\ScopeConfigInterface  */
+    protected $_scopeConfig;
 
     public function __construct(
         \Magento\Framework\View\Element\Template\Context $context,
         \Dealer4Dealer\SubstituteOrders\Model\ResourceModel\Order\CollectionFactory $orderCollectionFactory,
         \Magento\Customer\Model\Session $customerSession,
+        \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig,
         array $data = []
     ) {
         $this->orderCollectionFactory = $orderCollectionFactory;
         $this->customerSession = $customerSession;
+        $this->_scopeConfig = $scopeConfig;
         parent::__construct($context, $data);
     }
 
@@ -119,10 +120,9 @@ class History extends \Magento\Framework\View\Element\Template
 
         // todo read attribute with external customer id, if fails fallback on customer id.
         $externalCustomerId = '6';
-        $selectOrderBySetting = $this->scopeConfig->getValue(
-            'substitute/general/select_order_by',
-            \Magento\Store\Model\ScopeInterface::SCOPE_STORE,
-            $this->storeManager->getStore()->getId()
+        $selectOrderBySetting = $this->_scopeConfig->getValue(
+            'substitute/general/select_orders_by',
+            \Magento\Store\Model\ScopeInterface::SCOPE_STORE
             );
         if ($selectOrderBySetting == "magento_customer_id"){
             $collection->addFieldToFilter('magento_customer_id', $customerId);
