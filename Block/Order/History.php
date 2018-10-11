@@ -83,9 +83,8 @@ class History extends \Magento\Framework\View\Element\Template
     {
         $customerId = $this->customerSession->getCustomer()->getId();
 
-        $collection = $this->orderCollectionFactory->create();
-
         /* @var $collection \Dealer4Dealer\SubstituteOrders\Model\ResourceModel\Order\Collection */
+        $collection = $this->orderCollectionFactory->create();      
 
         if ($this->getRequest()->getParam('date_from')) {
             $collection->addFieldToFilter(
@@ -118,8 +117,20 @@ class History extends \Magento\Framework\View\Element\Template
             );
         }
 
+        // todo read attribute with external customer id, if fails fallback on customer id.
+        $externalCustomerId = '6';
+        $selectOrderBySetting = $this->scopeConfig->getValue(
+            'substitute/general/select_order_by',
+            \Magento\Store\Model\ScopeInterface::SCOPE_STORE,
+            $this->storeManager->getStore()->getId()
+            );
+        if ($selectOrderBySetting == "magento_customer_id"){
+            $collection->addFieldToFilter('magento_customer_id', $customerId);
+        } else {
+            $collection->addFieldToFilter('external_customer_id', $externalCustomerId);
+        }
+        
         $collection->setOrder('order_date', 'DESC')
-            ->addFieldToFilter('magento_customer_id', $customerId)
             ->setPageSize($this->getPageSize())
             ->setCurPage($this->getCurrentPage());
 

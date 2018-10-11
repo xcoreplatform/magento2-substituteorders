@@ -670,10 +670,15 @@ class UpgradeSchema implements UpgradeSchemaInterface
         );
     }
 
+    /**
+     * Create new table for attachments
+     *
+     * @param SetupInterface $installer
+     * @throws \Zend_Db_Exception
+     */
     public function attachmentTables($installer)
     {
         $table_dealer4dealer_substituteorders_attachment = $installer->getConnection()->newTable($installer->getTable('dealer4dealer_substituteorders_attachment'));
-
 
         $table_dealer4dealer_substituteorders_attachment->addColumn(
             'attachment_id',

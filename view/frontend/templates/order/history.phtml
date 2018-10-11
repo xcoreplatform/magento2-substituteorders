@@ -41,7 +41,7 @@
                 </tr>
             </thead>
             <tbody>
-                <?php foreach ($_orders as $_order): ?>
+                <?php /* @var $_order \Dealer4Dealer\SubstituteOrders\Model\Order */ foreach ($_orders as $_order): ?>
                     <tr>
                         <td data-th="<?php echo $block->escapeHtml(__('Order #')) ?>" class="col id"><?php /* @escapeNotVerified */ echo $_order->getRealOrderId() ?></td>
                         <td data-th="<?php echo $block->escapeHtml(__('Date')) ?>" class="col date"><?php /* @escapeNotVerified */ echo $block->formatDate($_order->getOrderDate()) ?></td>
