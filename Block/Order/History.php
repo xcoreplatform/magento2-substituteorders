@@ -29,20 +29,17 @@ class History extends \Magento\Framework\View\Element\Template
 
     const DEFAULT_PAGE_SIZE = 10;
 
-    /**
-     * @var string
-     */
+    /** @var string */
     protected $_template = 'order/history.phtml';
 
-    /*
-     * @var \Dealer4Dealer\SubstituteOrders\Model\ResourceModel\Order\CollectionFactory
-     */
+    /** @var \Dealer4Dealer\SubstituteOrders\Model\ResourceModel\Order\CollectionFactory */
     protected $orderCollectionFactory;
 
-    /*
-     * @var \Magento\Customer\Model\Session
-     */
+    /** @var \Magento\Customer\Model\Session */
     protected $customerSession;
+
+    /** @var \Magento\Customer\Api\CustomerRepositoryInterface */
+    protected $_customerRepository;
 
     /** @var \Magento\Framework\App\Config\ScopeConfigInterface  */
     protected $_scopeConfig;
@@ -51,12 +48,15 @@ class History extends \Magento\Framework\View\Element\Template
         \Magento\Framework\View\Element\Template\Context $context,
         \Dealer4Dealer\SubstituteOrders\Model\ResourceModel\Order\CollectionFactory $orderCollectionFactory,
         \Magento\Customer\Model\Session $customerSession,
-        \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig,
+        \Magento\Customer\Api\CustomerRepositoryInterface $customerRepository,
         array $data = []
     ) {
         $this->orderCollectionFactory = $orderCollectionFactory;
         $this->customerSession = $customerSession;
-        $this->_scopeConfig = $scopeConfig;
+        $this->_customerRepository = $customerRepository;
+
+        $this->_scopeConfig = $context->getScopeConfig();
+
         parent::__construct($context, $data);
     }
 
@@ -82,7 +82,9 @@ class History extends \Magento\Framework\View\Element\Template
 
     public function getOrderCollection()
     {
-        $customerId = $this->customerSession->getCustomer()->getId();
+        /** @var int */
+        $magentoCustomerId = $this->customerSession->getCustomer()->getid();
+        $magentoCustomer = $this->_customerRepository->getById($magentoCustomerId);
 
         /* @var $collection \Dealer4Dealer\SubstituteOrders\Model\ResourceModel\Order\Collection */
         $collection = $this->orderCollectionFactory->create();      
@@ -118,18 +120,19 @@ class History extends \Magento\Framework\View\Element\Template
             );
         }
 
-        // todo read attribute with external customer id, if fails fallback on customer id.
-        $externalCustomerId = '6';
+        /** @var \Magento\Framework\Api\AttributeInterface */
+        $externalCustomerIdAttribute = $magentoCustomer->getCustomAttribute("external_customer_id");
         $selectOrderBySetting = $this->_scopeConfig->getValue(
             'substitute/general/select_orders_by',
             \Magento\Store\Model\ScopeInterface::SCOPE_STORE
             );
-        if ($selectOrderBySetting == "magento_customer_id"){
-            $collection->addFieldToFilter('magento_customer_id', $customerId);
-        } else {
-            $collection->addFieldToFilter('external_customer_id', $externalCustomerId);
+
+        $customerSelectionId = $magentoCustomerId;
+        if ($selectOrderBySetting === 'external_customer_id' && $externalCustomerIdAttribute->getValue() !== ''){
+            $customerSelectionId = $externalCustomerIdAttribute->getValue();
         }
-        
+
+        $collection->addFieldToFilter($selectOrderBySetting, $customerSelectionId);
         $collection->setOrder('order_date', 'DESC')
             ->setPageSize($this->getPageSize())
             ->setCurPage($this->getCurrentPage());

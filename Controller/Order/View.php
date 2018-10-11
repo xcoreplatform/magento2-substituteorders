@@ -25,30 +25,26 @@ use Magento\Framework\App\RequestInterface;
 
 class View extends \Magento\Framework\App\Action\Action
 {
-    /*
-     * @var \Magento\Framework\View\Result\PageFactory
-     */
+    /** @var \Magento\Framework\View\Result\PageFactory */
     protected $resultPageFactory;
 
-    /*
-     * @var \Magento\Framework\Controller\Result\ForwardFactory
-     */
+    /** @var \Magento\Framework\Controller\Result\ForwardFactory */
     protected $resultForwardFactory;
 
-    /*
-     * @var \Magento\Framework\Registry
-     */
+    /** @var \Magento\Framework\Registry */
     protected $registry;
 
-    /*
-     * @var \Magento\Customer\Model\Session
-     */
+    /** @var \Magento\Customer\Model\Session */
     protected $customerSession;
 
-    /*
-     * @var \Dealer4Dealer\SubstituteOrders\Model\OrderFactory
-     */
+    /** @var \Dealer4Dealer\SubstituteOrders\Model\OrderFactory */
     protected $orderFactory;
+
+    /** @var \Magento\Framework\App\Config\ScopeConfigInterface */
+    protected $_scopeConfig;
+
+    /** @var \Magento\Customer\Api\CustomerRepositoryInterface  */
+    protected $_customerRepository;
 
     public function __construct(
         \Magento\Framework\Registry $registry,
@@ -56,13 +52,19 @@ class View extends \Magento\Framework\App\Action\Action
         \Magento\Framework\Controller\Result\ForwardFactory $resultForwardFactory,
         \Magento\Customer\Model\Session $customerSession,
         \Magento\Framework\View\Result\PageFactory $resultPageFactory,
-        \Dealer4Dealer\SubstituteOrders\Model\OrderFactory $orderFactory
+        \Dealer4Dealer\SubstituteOrders\Model\OrderFactory $orderFactory,
+        \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig,
+        \Magento\Customer\Api\CustomerRepositoryInterface $customerRepository
     ) {
         $this->registry = $registry;
         $this->resultPageFactory = $resultPageFactory;
         $this->resultForwardFactory = $resultForwardFactory;
         $this->customerSession = $customerSession;
         $this->orderFactory = $orderFactory;
+
+        $this->_scopeConfig = $scopeConfig;
+        $this->_customerRepository = $customerRepository;
+
         parent::__construct($context);
     }
 
@@ -121,15 +123,31 @@ class View extends \Magento\Framework\App\Action\Action
 
     /**
      * @param $order
-     * @param $customer
+     * @param $mCustomer
      * @return bool
      */
     public function canViewOrder($order, $customer)
     {
+        /** @var int */
+        $customerId = $this->customerSession->getCustomer()->getid();
+        $mCustomer = $this->_customerRepository->getById($customerId);
+
+        /** @var \Magento\Framework\Api\AttributeInterface */
+        $externalCustomerIdAttribute = $mCustomer->getCustomAttribute("external_customer_id");
+        $selectOrderBySetting = $this->_scopeConfig->getValue(
+            'substitute/general/select_orders_by',
+            \Magento\Store\Model\ScopeInterface::SCOPE_STORE
+        );
+
+        $customerSelectionId = $customerId;
+        if ($selectOrderBySetting === 'external_customer_id' && $externalCustomerIdAttribute->getValue() !== ''){
+            $customerSelectionId = $externalCustomerIdAttribute->getValue();
+        }
+
         $event = new \Magento\Framework\DataObject([
             'order' => $order,
-            'customer' => $customer,
-            'hasAccess' => $order->getData('magento_customer_id') == $customer->getId(),
+            'customer' => $mCustomer,
+            'hasAccess' => $order->getData($selectOrderBySetting) == $customerSelectionId,
         ]);
 
         $this->_eventManager->dispatch(
