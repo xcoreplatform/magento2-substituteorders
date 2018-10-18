@@ -136,7 +136,7 @@ class OrderSaveAfter implements \Magento\Framework\Event\ObserverInterface
         $customer = $this->customerRepository->getById($order->getCustomerId());
         /** @var \Magento\Framework\Api\AttributeInterface */
         $externalCustomerIdAttribute = $customer->getCustomAttribute("external_customer_id");
-        if ($externalCustomerIdAttribute->getValue() !== ''){
+        if ($externalCustomerIdAttribute !== null && $externalCustomerIdAttribute->getValue() !== ''){
             $substitute->setExternalCustomerId($externalCustomerIdAttribute->getValue());
         }
 

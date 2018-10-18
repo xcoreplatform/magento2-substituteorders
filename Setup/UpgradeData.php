@@ -46,6 +46,8 @@ class UpgradeData implements UpgradeDataInterface
         if (version_compare($context->getVersion(), '2.0.2', "<")){
             $this->createExternalIdAttribute($installer);
         }
+
+        $installer->endSetup();
     }
 
     private function createExternalIdAttribute(ModuleDataSetupInterface $setup) {
@@ -54,28 +56,18 @@ class UpgradeData implements UpgradeDataInterface
         /** @var CustomerSetup $customerSetup */
         $customerSetup = $this->customerSetupFactory->create(['setup'=>$setup]);
 
-        $customerEntity = $customerSetup->getEavConfig()->getEntityType('customer');
-        $attributeSetId = $customerEntity->getDefaultAttributeSetId();
-
-        /** @var AttributeSet $attributeSet */
-        $attributeSet = $this->attributeSetFactory->create();
-        $attributeGroupId = $attributeSet->getDefaultGroupId($attributeSetId);
-
         $customerSetup->addAttribute(Customer::ENTITY, $attributeCode, [
             'type' => 'varchar',
             'label' => 'External Customer Id',
             'input' => 'text',
             'required' => false,
             'visible' => true,
-            'user_defined' => true,
             'position' => 999,
             'system' => 0
         ]);
 
         $attribute = $customerSetup->getEavConfig()->getAttribute(Customer::ENTITY, $attributeCode)
             ->addData([
-                'attribute_set_id' => $attributeSetId,
-                'attribute_group_id' => $attributeGroupId,
                 'used_in_forms' => ['adminhtml_customer']
             ]);
 
