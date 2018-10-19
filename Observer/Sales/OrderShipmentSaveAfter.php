@@ -74,9 +74,8 @@ class OrderShipmentSaveAfter implements \Magento\Framework\Event\ObserverInterfa
     public function execute(
         \Magento\Framework\Event\Observer $observer
     ) {
-
         /* @var $shipment \Magento\Sales\Api\Data\ShipmentInterface */
-        $shipment = $observer->getEvent()->getShipment();
+        $shipment = $observer->getShipment();
 
         try {
             /* @var $substitute \Dealer4Dealer\SubstituteOrders\Api\Data\ShipmentInterface */

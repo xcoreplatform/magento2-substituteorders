@@ -79,6 +79,7 @@ class OrderInvoiceSaveAfter implements \Magento\Framework\Event\ObserverInterfac
      *
      * @param \Magento\Framework\Event\Observer $observer
      * @return void
+     * @throws \Exception
      */
     public function execute(
         \Magento\Framework\Event\Observer $observer
