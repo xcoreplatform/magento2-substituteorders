@@ -74,6 +74,10 @@ class UpgradeSchema implements UpgradeSchemaInterface
         if (version_compare($context->getVersion(), "2.0.0", "<")) {
             $this->attachmentTables($installer);
         }
+        
+        if (version_compare($context->getVersion(), "2.0.1", "<")) {
+            $this->addExternalCustomerField($installer);
+        }
 
         $installer->endSetup();
     }
@@ -666,10 +670,15 @@ class UpgradeSchema implements UpgradeSchemaInterface
         );
     }
 
+    /**
+     * Create new table for attachments
+     *
+     * @param SetupInterface $installer
+     * @throws \Zend_Db_Exception
+     */
     public function attachmentTables($installer)
     {
         $table_dealer4dealer_substituteorders_attachment = $installer->getConnection()->newTable($installer->getTable('dealer4dealer_substituteorders_attachment'));
-
 
         $table_dealer4dealer_substituteorders_attachment->addColumn(
             'attachment_id',
@@ -715,5 +724,37 @@ class UpgradeSchema implements UpgradeSchemaInterface
         );
 
         $installer->getConnection()->createTable($table_dealer4dealer_substituteorders_attachment);
+    }
+
+    /**
+     * Add 'external customer id' column and make 'magento customer id' column nullable.
+     * 
+     * @param SetupInterface $installer
+     */
+    public function addExternalCustomerField($installer){
+        $table = $installer->getTable(InstallSchema::ORDER_TABLE);
+        
+        $columns = [
+            'external_customer_id' => [
+                'type' => \Magento\Framework\DB\Ddl\Table::TYPE_INTEGER,
+                'nullable' => true,
+                'comment' => "External customer id"
+            ]
+        ];
+        
+        $connection = $installer->getConnection();
+        
+        foreach ($columns as $name => $definition) {
+            $connection->addColumn($table, $name, $definition);
+        }
+        
+        $installer->getConnection()->modifyColumn(
+            $table,
+            "magento_customer_id",
+            [
+                'type' => \Magento\Framework\DB\Ddl\Table::TYPE_INTEGER,
+                'nullable' => true
+            ]
+            );
     }
 }

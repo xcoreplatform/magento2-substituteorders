@@ -370,6 +370,22 @@ class Order extends \Magento\Framework\Model\AbstractModel implements OrderInter
     }
 
     /**
+     * {@inheritDoc}
+     * @see \Dealer4Dealer\SubstituteOrders\Api\Data\OrderInterface::getExternalCustomerId()
+     */
+    public function getExternalCustomerId(){
+        return $this->getData(self::EXTERNAL_CUSTOMER_ID);    
+    }
+    
+    /**
+     * {@inheritDoc}
+     * @see \Dealer4Dealer\SubstituteOrders\Api\Data\OrderInterface::setExternalCustomerId()
+     */
+    public function setExternalCustomerId($external_customer_id){
+        return $this->setData(self::EXTERNAL_CUSTOMER_ID, $external_customer_id);
+    }
+    
+    /**
      * @inheritDoc
      */
     public function getExtOrderId()

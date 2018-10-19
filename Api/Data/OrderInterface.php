@@ -50,7 +50,7 @@ interface OrderInterface
     const UPDATED_AT            = 'updated_at';
     const ITEMS                 = 'items';
     const FILE_CONTENT          = 'file_content';
-
+    const EXTERNAL_CUSTOMER_ID  = 'external_customer_id';
 
     /**
      * Get order_id
@@ -108,6 +108,19 @@ interface OrderInterface
     
     public function setMagentoCustomerId($magento_customer_id);
 
+    /**
+     * Get external_customer_id
+     * @return string|null
+     */
+    public function getExternalCustomerId();
+    
+    /**
+     * Set external_customer_id
+     * @param string $external_customer_id
+     * @return \Dealer4Dealer\SubstituteOrders\Api\Data\OrderInterface
+     */
+    public function setExternalCustomerId($external_customer_id);
+    
     /**
      * Get ext_order_id
      * @return string|null

@@ -8,9 +8,11 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class UpdateOrders extends Command
 {
-
     /**@var \Dealer4Dealer\SubstituteOrders\Observer\Sales\OrderSaveAfter */
     protected $orderSaveAfter;
+
+    /** @var \Dealer4Dealer\SubstituteOrders\Observer\Sales\OrderInvoiceSaveAfter */
+    protected $invoiceSaveAfter;
 
     /**@var \Magento\Framework\ObjectManagerInterface */
     protected $objectManager;
@@ -18,16 +20,22 @@ class UpdateOrders extends Command
     /**@var \Magento\Sales\Model\OrderFactory */
     protected $orderFactory;
 
+    /** @var \Magento\Framework\App\State */
+    protected $state;
+
     public function __construct(
         \Magento\Framework\ObjectManagerInterface $objectManager,
         \Dealer4Dealer\SubstituteOrders\Observer\Sales\OrderSaveAfter $orderSaveAfter,
         \Magento\Sales\Model\OrderFactory $orderFactory,
+        \Magento\Framework\App\State $state,
         $name = null
     ) {
         parent::__construct($name);
+
         $this->objectManager = $objectManager;
         $this->orderSaveAfter = $orderSaveAfter;
         $this->orderFactory = $orderFactory;
+        $this->state = $state;
     }
 
     /**
@@ -37,6 +45,8 @@ class UpdateOrders extends Command
         InputInterface $input,
         OutputInterface $output
     ) {
+        $this->state->setAreaCode(\Magento\Framework\App\Area::AREA_FRONTEND);
+
         $collection = $this->orderFactory->create()->getCollection();
         $size = $collection->getSize();
         $maxPages = ceil($size / 250);
@@ -47,6 +57,8 @@ class UpdateOrders extends Command
 
             $collection->clear()->setPageSize(250)->setCurPage($page)->load();
             foreach ($collection as $order) {
+                // Copy the order
+
                 /** @var \Magento\Framework\Event\Observer $observer */
                 $observer = $this->objectManager->get('\Magento\Framework\Event\Observer');
                 $observer->setOrder($order);
@@ -56,6 +68,20 @@ class UpdateOrders extends Command
                 } catch (\Exception $e) {
                     print("ERROR: Could not update order: {$e->getMessage()}\n");
                 }
+
+                // Copy the invoices
+                foreach ($order->getInvoiceCollection() as $invoice){
+                    /** @var \Magento\Framework\Event\Observer */
+                    $observer = $this->objectManager->get('\Magento\Framework\Event\Observer');
+                    $observer->setInvoice($invoice);
+
+                    try{
+                        $this->invoiceSaveAfter->execute($observer);
+                    } catch (\Exception $e){
+                        print("EROOR: Could not update invoice: {$e->getMessage()}\n");
+                    }
+                }
+
             }
 
             $page++;
@@ -68,7 +94,7 @@ class UpdateOrders extends Command
     protected function configure()
     {
         $this->setName("substituteorders:updateorders");
-        $this->setDescription("Update orders");
+        $this->setDescription("Copy existing order information to substitute orders");
         parent::configure();
     }
 }

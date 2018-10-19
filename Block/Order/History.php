@@ -21,9 +21,6 @@
 
 namespace Dealer4Dealer\SubstituteOrders\Block\Order;
 
-use \Magento\Framework\App\ObjectManager;
-use \Magento\Sales\Model\ResourceModel\Order\CollectionFactoryInterface;
-
 /**
  * Substitute Orders history block
  */
@@ -32,30 +29,34 @@ class History extends \Magento\Framework\View\Element\Template
 
     const DEFAULT_PAGE_SIZE = 10;
 
-    /**
-     * @var string
-     */
+    /** @var string */
     protected $_template = 'order/history.phtml';
 
-    /*
-     * @var \Dealer4Dealer\SubstituteOrders\Model\ResourceModel\Order\CollectionFactory
-     */
+    /** @var \Dealer4Dealer\SubstituteOrders\Model\ResourceModel\Order\CollectionFactory */
     protected $orderCollectionFactory;
 
-    /*
-     * @var \Magento\Customer\Model\Session
-     */
+    /** @var \Magento\Customer\Model\Session */
     protected $customerSession;
 
+    /** @var \Magento\Customer\Api\CustomerRepositoryInterface */
+    protected $_customerRepository;
+
+    /** @var \Magento\Framework\App\Config\ScopeConfigInterface  */
+    protected $_scopeConfig;
 
     public function __construct(
         \Magento\Framework\View\Element\Template\Context $context,
         \Dealer4Dealer\SubstituteOrders\Model\ResourceModel\Order\CollectionFactory $orderCollectionFactory,
         \Magento\Customer\Model\Session $customerSession,
+        \Magento\Customer\Api\CustomerRepositoryInterface $customerRepository,
         array $data = []
     ) {
         $this->orderCollectionFactory = $orderCollectionFactory;
         $this->customerSession = $customerSession;
+        $this->_customerRepository = $customerRepository;
+
+        $this->_scopeConfig = $context->getScopeConfig();
+
         parent::__construct($context, $data);
     }
 
@@ -81,11 +82,12 @@ class History extends \Magento\Framework\View\Element\Template
 
     public function getOrderCollection()
     {
-        $customerId = $this->customerSession->getCustomer()->getId();
-
-        $collection = $this->orderCollectionFactory->create();
+        /** @var int */
+        $magentoCustomerId = $this->customerSession->getCustomer()->getid();
+        $magentoCustomer = $this->_customerRepository->getById($magentoCustomerId);
 
         /* @var $collection \Dealer4Dealer\SubstituteOrders\Model\ResourceModel\Order\Collection */
+        $collection = $this->orderCollectionFactory->create();      
 
         if ($this->getRequest()->getParam('date_from')) {
             $collection->addFieldToFilter(
@@ -118,8 +120,20 @@ class History extends \Magento\Framework\View\Element\Template
             );
         }
 
+        /** @var \Magento\Framework\Api\AttributeInterface */
+        $externalCustomerIdAttribute = $magentoCustomer->getCustomAttribute("external_customer_id");
+        $selectOrderBySetting = $this->_scopeConfig->getValue(
+            'substitute/general/select_orders_by',
+            \Magento\Store\Model\ScopeInterface::SCOPE_STORE
+            );
+
+        $customerSelectionId = $magentoCustomerId;
+        if ($selectOrderBySetting === 'external_customer_id' && $externalCustomerIdAttribute->getValue() !== ''){
+            $customerSelectionId = $externalCustomerIdAttribute->getValue();
+        }
+
+        $collection->addFieldToFilter($selectOrderBySetting, $customerSelectionId);
         $collection->setOrder('order_date', 'DESC')
-            ->addFieldToFilter('magento_customer_id', $customerId)
             ->setPageSize($this->getPageSize())
             ->setCurPage($this->getCurrentPage());
 

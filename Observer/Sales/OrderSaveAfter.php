@@ -47,12 +47,16 @@ class OrderSaveAfter implements \Magento\Framework\Event\ObserverInterface
     /**@var \Magento\Framework\App\Config\ScopeConfigInterface */
     protected $scopeConfig;
 
+    /** @var \Magento\Customer\Api\CustomerRepositoryInterface  */
+    protected $customerRepository;
+
     public function __construct(
         \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig,
         \Dealer4Dealer\SubstituteOrders\Model\OrderFactory $orderFactory,
         \Dealer4Dealer\SubstituteOrders\Model\OrderAddressFactory $addressFactory,
         \Dealer4Dealer\SubstituteOrders\Model\OrderItemFactory $orderItemFactory,
-        \Dealer4Dealer\SubstituteOrders\Api\OrderRepositoryInterface $orders
+        \Dealer4Dealer\SubstituteOrders\Api\OrderRepositoryInterface $orders,
+        \Magento\Customer\Api\CustomerRepositoryInterface $customerRepository
     ) {
         $this->orderFactory = $orderFactory;
         $this->addressFactory = $addressFactory;
@@ -60,6 +64,7 @@ class OrderSaveAfter implements \Magento\Framework\Event\ObserverInterface
 
         $this->orderRepository = $orders;
         $this->scopeConfig = $scopeConfig;
+        $this->customerRepository = $customerRepository;
     }
 
     /**
@@ -128,6 +133,12 @@ class OrderSaveAfter implements \Magento\Framework\Event\ObserverInterface
         $substituteShippingAddress->setData(array_merge($substituteShippingAddress->getData(), $shippingAddressData));
         $substitute->setShippingAddress($substituteShippingAddress);
 
+        $customer = $this->customerRepository->getById($order->getCustomerId());
+        /** @var \Magento\Framework\Api\AttributeInterface */
+        $externalCustomerIdAttribute = $customer->getCustomAttribute("external_customer_id");
+        if ($externalCustomerIdAttribute !== null && $externalCustomerIdAttribute->getValue() !== ''){
+            $substitute->setExternalCustomerId($externalCustomerIdAttribute->getValue());
+        }
 
         # Add order items
         $items = [];
