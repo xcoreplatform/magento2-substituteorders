@@ -133,11 +133,13 @@ class OrderSaveAfter implements \Magento\Framework\Event\ObserverInterface
         $substituteShippingAddress->setData(array_merge($substituteShippingAddress->getData(), $shippingAddressData));
         $substitute->setShippingAddress($substituteShippingAddress);
 
-        $customer = $this->customerRepository->getById($order->getCustomerId());
-        /** @var \Magento\Framework\Api\AttributeInterface */
-        $externalCustomerIdAttribute = $customer->getCustomAttribute("external_customer_id");
-        if ($externalCustomerIdAttribute !== null && $externalCustomerIdAttribute->getValue() !== ''){
-            $substitute->setExternalCustomerId($externalCustomerIdAttribute->getValue());
+        if ($order->getCustomerId() !== 0 && $order->getCustomerId() !== null) {
+            $customer = $this->customerRepository->getById($order->getCustomerId());
+            /** @var \Magento\Framework\Api\AttributeInterface */
+            $externalCustomerIdAttribute = $customer->getCustomAttribute("external_customer_id");
+            if ($externalCustomerIdAttribute !== null && $externalCustomerIdAttribute->getValue() !== ''){
+                $substitute->setExternalCustomerId($externalCustomerIdAttribute->getValue());
+            }
         }
 
         # Add order items
