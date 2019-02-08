@@ -128,11 +128,13 @@ class History extends \Magento\Framework\View\Element\Template
             );
 
         $customerSelectionId = $magentoCustomerId;
-        if ($selectOrderBySetting === 'external_customer_id' && $externalCustomerIdAttribute->getValue() !== ''){
+        if ($selectOrderBySetting === 'external_customer_id' && $externalCustomerIdAttribute !== null && $externalCustomerIdAttribute->getValue() !== ''){
             $customerSelectionId = $externalCustomerIdAttribute->getValue();
+            $collection->addFieldToFilter($selectOrderBySetting, $customerSelectionId);
+        } else{
+            $collection->addFieldToFilter('magento_customer_id', $customerSelectionId);
         }
 
-        $collection->addFieldToFilter($selectOrderBySetting, $customerSelectionId);
         $collection->setOrder('order_date', 'DESC')
             ->setPageSize($this->getPageSize())
             ->setCurPage($this->getCurrentPage());
