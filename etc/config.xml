@@ -5,7 +5,8 @@
             <general>
                 <real_order_id>magento</real_order_id>
                 <show_both_ids>1</show_both_ids>
-                <select_orders_by>magento_customer_id</select_orders_by></general>
+                <select_orders_by>magento_customer_id</select_orders_by>
+            </general>
         </substitute>
     </default>
 </config>
