@@ -140,15 +140,21 @@ class View extends \Magento\Framework\App\Action\Action
         );
 
         $customerSelectionId = $customerId;
-        if ($selectOrderBySetting === 'external_customer_id' && $externalCustomerIdAttribute->getValue() !== ''){
+        if ($selectOrderBySetting === 'external_customer_id' && $externalCustomerIdAttribute !== null && $externalCustomerIdAttribute->getValue() !== ''){
             $customerSelectionId = $externalCustomerIdAttribute->getValue();
-        }
 
-        $event = new \Magento\Framework\DataObject([
-            'order' => $order,
-            'customer' => $mCustomer,
-            'hasAccess' => $order->getData($selectOrderBySetting) == $customerSelectionId,
-        ]);
+            $event = new \Magento\Framework\DataObject([
+                'order' => $order,
+                'customer' => $mCustomer,
+                'hasAccess' => $order->getData($selectOrderBySetting) == $customerSelectionId,
+            ]);
+        } else {
+            $event = new \Magento\Framework\DataObject([
+                'order' => $order,
+                'customer' => $mCustomer,
+                'hasAccess' => $order->getData('magento_customer_id') == $customerSelectionId,
+            ]);
+        }
 
         $this->_eventManager->dispatch(
             'substituteorder_customer_has_order_access',
