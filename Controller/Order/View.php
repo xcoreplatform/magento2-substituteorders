@@ -146,13 +146,13 @@ class View extends \Magento\Framework\App\Action\Action
             $event = new \Magento\Framework\DataObject([
                 'order' => $order,
                 'customer' => $mCustomer,
-                'hasAccess' => $order->getData($selectOrderBySetting) === $customerSelectionId,
+                'hasAccess' => $order->getData($selectOrderBySetting) == $customerSelectionId,
             ]);
         } else {
             $event = new \Magento\Framework\DataObject([
                 'order' => $order,
                 'customer' => $mCustomer,
-                'hasAccess' => $order->getData('magento_customer_id') === $customerSelectionId,
+                'hasAccess' => $order->getData('magento_customer_id') == $customerSelectionId,
             ]);
         }
 
