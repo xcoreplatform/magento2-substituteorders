@@ -32,7 +32,7 @@
             <caption class="table-caption"><?php /* @escapeNotVerified */ echo __('Orders') ?></caption>
             <thead>
                 <tr>
-                    <th scope="col" class="col id"><?php /* @escapeNotVerified */ echo __('Order #') ?></th>
+                    <th scope="col" class="col id"><?php /* @escapeNotVerified */ echo __('Order # (ext. id)') ?></th>
                     <th scope="col" class="col date"><?php /* @escapeNotVerified */ echo __('Date') ?></th>
                     <?php /* @noEscape */ echo $block->getChildHtml('extra.column.header');?>
                     <th scope="col" class="col total"><?php /* @escapeNotVerified */ echo __('Order Total') ?></th>
@@ -43,7 +43,9 @@
             <tbody>
                 <?php /* @var $_order \Dealer4Dealer\SubstituteOrders\Model\Order */ foreach ($_orders as $_order): ?>
                     <tr>
-                        <td data-th="<?php echo $block->escapeHtml(__('Order #')) ?>" class="col id"><?php /* @escapeNotVerified */ echo $_order->getRealOrderId() ?></td>
+                        <td data-th="<?php echo $block->escapeHtml(__('Order #')) ?>" class="col id">
+                            <span><?php /* @escapeNotVerified */ echo $_order->getRealOrderId(); ?></span>
+                            <span><i><?php echo (!empty($_order->getExtOrderId())) ? "(" . $_order->getExtOrderId() . ")" : ""; ?></i></span></td>
                         <td data-th="<?php echo $block->escapeHtml(__('Date')) ?>" class="col date"><?php /* @escapeNotVerified */ echo $block->formatDate($_order->getOrderDate()) ?></td>
                         <?php $extra = $block->getChildBlock('extra.container'); ?>
                         <?php if ($extra): ?>

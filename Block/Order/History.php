@@ -87,7 +87,7 @@ class History extends \Magento\Framework\View\Element\Template
         $magentoCustomer = $this->_customerRepository->getById($magentoCustomerId);
 
         /* @var $collection \Dealer4Dealer\SubstituteOrders\Model\ResourceModel\Order\Collection */
-        $collection = $this->orderCollectionFactory->create();      
+        $collection = $this->orderCollectionFactory->create();
 
         if ($this->getRequest()->getParam('date_from')) {
             $collection->addFieldToFilter(
@@ -131,11 +131,12 @@ class History extends \Magento\Framework\View\Element\Template
         if ($selectOrderBySetting === 'external_customer_id' && $externalCustomerIdAttribute !== null && $externalCustomerIdAttribute->getValue() !== ''){
             $customerSelectionId = $externalCustomerIdAttribute->getValue();
             $collection->addFieldToFilter($selectOrderBySetting, $customerSelectionId);
-        } else{
+        } else {
             $collection->addFieldToFilter('magento_customer_id', $customerSelectionId);
         }
 
-        $collection->setOrder('order_date', 'DESC')
+        $collection->setOrder('order_date')
+            ->setOrder('magento_increment_id')
             ->setPageSize($this->getPageSize())
             ->setCurPage($this->getCurrentPage());
 

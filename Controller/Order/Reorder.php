@@ -51,19 +51,27 @@ class Reorder extends \Magento\Framework\App\Action\Action
      */
     protected $cart;
 
+    /*
+     * @var \Magento\Sales\Api\OrderRepositoryInterface
+     */
+    protected $orderRepository;
+
+
     public function __construct(
         \Magento\Framework\App\Action\Context $context,
         \Magento\Customer\Model\Session $customerSession,
         \Magento\Framework\Controller\Result\ForwardFactory $resultForwardFactory,
         \Dealer4Dealer\SubstituteOrders\Model\OrderFactory $orderFactory,
         \Magento\Catalog\Model\ResourceModel\Product\CollectionFactory $productCollectionFactory,
-        \Magento\Checkout\Model\Cart $cart
+        \Magento\Checkout\Model\Cart $cart,
+        \Magento\Sales\Api\OrderRepositoryInterface $orderRepository
     ) {
         $this->resultForwardFactory = $resultForwardFactory;
         $this->customerSession = $customerSession;
         $this->orderFactory = $orderFactory;
         $this->productCollectionFactory = $productCollectionFactory;
         $this->cart = $cart;
+        $this->orderRepository = $orderRepository;
         parent::__construct($context);
     }
 
@@ -92,18 +100,62 @@ class Reorder extends \Magento\Framework\App\Action\Action
             return $resultForward->forward('noroute');
         }
 
+        $subOrder = $this->orderFactory->create()->load($orderId);
+
+        $incrementId = $subOrder->getMagentoOrderId();
+
+        if (empty($incrementId)) {
+            return $this->reorderByProduct($orderId);
+        } else {
+            return $this->reorderByOrderItems($subOrder, $incrementId);
+        }
+
+    }
+
+    /**
+     * Reorder based on order items.
+     *
+     * @param $subOrder
+     * @param $incrementId
+     * @return
+     */
+    public function reorderByOrderItems($subOrder, $incrementId) {
+
+        $customer = $this->customerSession->getCustomer();
+
+        if ($subOrder && $subOrder->getId() && $this->canReOrder($subOrder, $customer)) {
+            $order = $this->orderRepository->get($incrementId);
+
+            foreach ($order->getItems() as $item) {
+                $this->cart->addOrderItem($item);
+            }
+
+            $this->cart->save();
+
+            $resultRedirect = $this->resultRedirectFactory->create();
+            return $resultRedirect->setPath('checkout/cart');
+        }
+
+        $resultForward = $this->resultForwardFactory->create();
+        return $resultForward->forward('noroute');
+    }
+
+    /**
+     * Reorder based on product items.
+     *
+     * @param $orderId
+     * @return
+     */
+    public function reorderByProduct($orderId) {
+
         $customer = $this->customerSession->getCustomer();
         $order = $this->orderFactory->create()->load($orderId);
-
         if ($order && $order->getId() && $this->canReOrder($order, $customer)) {
             $itemQty = [];
-
             foreach ($order->getItems() as $item) {
                 $itemQty[$item['sku']] = $item['qty'];
             }
-
             $productCollection = $this->getProductCollection($itemQty);
-
             $errors = [];
             foreach ($productCollection as $product) {
                 try {
@@ -117,8 +169,6 @@ class Reorder extends \Magento\Framework\App\Action\Action
                 }
             }
             $this->cart->save();
-
-
             foreach ($errors as $error) {
                 if ($this->customerSession->getUseNotice(true)) {
                     $this->messageManager->addNotice($error);
@@ -126,11 +176,9 @@ class Reorder extends \Magento\Framework\App\Action\Action
                     $this->messageManager->addError($error);
                 }
             }
-
             $resultRedirect = $this->resultRedirectFactory->create();
             return $resultRedirect->setPath('checkout/cart');
         }
-
         $resultForward = $this->resultForwardFactory->create();
         return $resultForward->forward('noroute');
     }

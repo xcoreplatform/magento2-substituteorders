@@ -20,17 +20,22 @@ class Items extends \Magento\Sales\Block\Items\AbstractItems
      */
     protected $_coreRegistry = null;
 
+    protected $_orderRepository;
+
     /**
      * @param \Magento\Framework\View\Element\Template\Context $context
      * @param \Magento\Framework\Registry $registry
+     * @param \Magento\Sales\Api\OrderRepositoryInterface $orderRepository
      * @param array $data
      */
     public function __construct(
         \Magento\Framework\View\Element\Template\Context $context,
         \Magento\Framework\Registry $registry,
+        \Magento\Sales\Api\OrderRepositoryInterface $orderRepository,
         array $data = []
     ) {
         $this->_coreRegistry = $registry;
+        $this->_orderRepository = $orderRepository;
         parent::__construct($context, $data);
     }
 
@@ -42,6 +47,14 @@ class Items extends \Magento\Sales\Block\Items\AbstractItems
     public function getOrder()
     {
         return $this->_coreRegistry->registry('current_order');
+    }
+
+    /**
+     * @param Magento order id $id
+     * @return order
+     */
+    public function getOrderById($id) {
+        return $this->_orderRepository->get($id);
     }
 
     /**
