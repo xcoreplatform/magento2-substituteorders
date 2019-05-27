@@ -64,7 +64,8 @@ class Recent extends \Magento\Framework\View\Element\Template
         $customerId = $this->customerSession->getCustomer()->getId();
 
         $collection = $this->orderCollectionFactory->create();
-        $collection->setOrder('order_date', 'DESC')
+        $collection->setOrder('order_date')
+            ->setOrder('magento_increment_id')
             ->addFieldToFilter('magento_customer_id', $customerId)
             ->setPageSize(5)
             ->load();

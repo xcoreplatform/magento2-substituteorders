@@ -12,6 +12,7 @@
     <body>
         <referenceContainer name="page.main.title">
             <block class="Dealer4Dealer\SubstituteOrders\Block\Order\Info" name="order.status" template="Dealer4Dealer_SubstituteOrders::order/order_status.phtml"/>
+            <block class="Dealer4Dealer\SubstituteOrders\Block\Order\Info" name="order.extId" template="Dealer4Dealer_SubstituteOrders::order/order_ext_id.phtml" />
             <block class="Dealer4Dealer\SubstituteOrders\Block\Order\Info" name="order.date" template="Dealer4Dealer_SubstituteOrders::order/order_date.phtml"/>
             <container name="order.actions.container" htmlTag="div" htmlClass="actions-toolbar order-actions-toolbar">
                 <block class="Dealer4Dealer\SubstituteOrders\Block\Order\Info\Buttons" as="buttons" name="substituteorder.order.info.buttons" cacheable="false"/>
