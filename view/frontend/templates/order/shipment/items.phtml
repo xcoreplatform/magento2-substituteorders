@@ -17,16 +17,17 @@
 </div>
 
 <?php if(count($_order->getShipmentCollection()) > 0): ?>
+    <?php /** @var $_shipment \Dealer4Dealer\SubstituteOrders\Model\Shipment */ ?>
     <?php foreach ($_order->getShipmentCollection() as $_shipment): ?>
         <div class="order-title">
-            <strong><?php /* @escapeNotVerified */
-                echo __('Shipment #') ?><?php /* @escapeNotVerified */
-                echo $_shipment->getIncrementId(); ?></strong>
+            <strong>
+                <?php /* @escapeNotVerified */ echo __('Shipment #') ?>
+                <?php /* @escapeNotVerified */ echo $_shipment->getIncrementId(); ?>
+            </strong>
 
             <?php if ($block->hasTracking()) : ?>
-                <a href="#"
-                   data-mage-init='{"popupWindow": {"windowURL":"<?php /* @escapeNotVerified */
-                   echo $block->getShipmentTrackUrl($_order) ?>","windowName":"trackshipment","width":800,"height":600,"top":0,"left":0,"resizable":1,"scrollbars":1}}'
+                <a href="#" data-mage-init='{"popupWindow": {"windowURL":"<?php /* @escapeNotVerified */
+                    echo $block->getShipmentTrackUrl($_order) ?>","windowName":"trackshipment","width":800,"height":600,"top":0,"left":0,"resizable":1,"scrollbars":1}}'
                    title="<?php /* @escapeNotVerified */
                    echo __('Track this shipment') ?>"
                    class="action track">
@@ -37,8 +38,7 @@
         </div>
         <?php $tracks = $_shipment->getTracksCollection(); ?>
         <?php if ($tracks): ?>
-            <dl class="order-tracking" id="my-tracking-table-<?php /* @escapeNotVerified */
-            echo $_shipment->getId(); ?>">
+            <dl class="order-tracking" id="my-tracking-table-<?php /* @escapeNotVerified */ echo $_shipment->getId(); ?>">
                 <dt class="tracking-title">
                     <?php /* @escapeNotVerified */
                     echo __('Tracking Number(s):') ?>
@@ -60,6 +60,16 @@
                 </dd>
             </dl>
         <?php endif; ?>
+        <?php if($_shipment->getShippingMethod()): ?>
+            <dl class="order-tracking">
+                <dt class="tracking-title">
+                       <?php echo __('Shipping method:'); ?>
+                </dt>
+                <dd class="tracking-content">
+                    <?php echo $_shipment->getShippingMethod(); ?>
+                </dd>
+            </dl>
+        <?php endif ?>
         <div class="table-wrapper order-items-shipment">
             <table class="data table table-order-items shipment" id="my-shipment-table-<?php /* @escapeNotVerified */
             echo $_shipment->getId(); ?>">

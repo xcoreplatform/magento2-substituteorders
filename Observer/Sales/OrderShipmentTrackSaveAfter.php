@@ -26,7 +26,7 @@ class OrderShipmentTrackSaveAfter implements \Magento\Framework\Event\ObserverIn
     public function execute(
         \Magento\Framework\Event\Observer $observer
     ) {
-        $track = $observer->getEvent()->getTrack();
+        $track = $observer->getTrack();
         try {
             $shipment = $track->getShipment();
         } catch (\Exception $e) {

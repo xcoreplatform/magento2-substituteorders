@@ -30,6 +30,7 @@ class InstallSchema implements InstallSchemaInterface
     const ORDER_TABLE = "dealer4dealer_order";
     const ORDERITEM_TABLE = "dealer4dealer_orderitem";
     const ORDERADDRESS_TABLE = "dealer4dealer_orderaddress";
+    const SHIPMENT_TABLE = "dealer4dealer_shipment";
 
     /**
      * {@inheritdoc}

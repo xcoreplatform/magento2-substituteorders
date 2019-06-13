@@ -115,18 +115,30 @@ class ShipmentManagement implements \Dealer4Dealer\SubstituteOrders\Api\Shipment
 
     /**
      * {@inheritdoc}
+     *
+     * @param \Dealer4Dealer\SubstituteOrders\Api\Data\ShipmentInterface $shipment
      */
     public function putShipment($shipment)
     {
-        $oldShipment = $this->shipmentFactory->create()->load($shipment->getId());
+        /** @var $oldShipment \Dealer4Dealer\SubstituteOrders\Api\Data\ShipmentInterface */
+
+        if ($shipment->getId()){
+            $oldShipment = $this->shipmentFactory->create()->load($shipment->getId());
+        } else if($shipment->getIncrementId())  {
+            $oldShipment = $this->shipmentFactory->create()->load($shipment->getIncrementId(), "increment_id");
+        }
 
         if (!$oldShipment->getId()) {
             return false;
         }
 
         $oldShipment->setData(array_merge($oldShipment->getData(), $shipment->getData()));
-        $oldShipment->setShippingAddress($shipment->getShippingAddress());
-        $oldShipment->setBillingAddress($shipment->getBillingAddress());
+        if ($shipment->getShippingAddress()){
+            $oldShipment->setShippingAddress($shipment->getShippingAddress());
+        }
+        if ($shipment->getBillingAddress()) {
+            $oldShipment->setBillingAddress($shipment->getBillingAddress());
+        }
         $oldShipment->setItems($shipment->getItems());
         $oldShipment->setTracking($shipment->getTracking());
         $oldShipment->setAdditionalData($shipment->getAdditionalData());
@@ -155,7 +167,7 @@ class ShipmentManagement implements \Dealer4Dealer\SubstituteOrders\Api\Shipment
     }
 
     /**
-     * @param $shipment
+     * @param \Dealer4Dealer\SubstituteOrders\Api\Data\ShipmentInterface $shipment
      */
     public function saveAttachment($shipment)
     {

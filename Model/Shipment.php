@@ -584,4 +584,20 @@ class Shipment extends \Magento\Framework\Model\AbstractModel implements Shipmen
         }
         return $this->_attachments;
     }
+
+    /**
+     * @inheritDoc
+     */
+    public function getShippingMethod()
+    {
+        return $this->getData(self::SHIPPING_METHOD);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function setShippingMethod($shipping_method)
+    {
+        return $this->setData(self::SHIPPING_METHOD, $shipping_method);
+    }
 }

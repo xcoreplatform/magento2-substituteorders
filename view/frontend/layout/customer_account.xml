@@ -7,7 +7,9 @@
 
         <!-- Add elements -->
         <referenceBlock name="customer_account_navigation">
-            <block class="Magento\Framework\View\Element\Html\Link\Current" name="customer-account-navigation-substitute-orders" after="customer-account-navigation-downloadable-products-link">
+            <block class="Magento\Framework\View\Element\Html\Link\Current"
+                   name="customer-account-navigation-substitute-orders"
+                   after="customer-account-navigation-downloadable-products-link">
                 <arguments>
                     <argument name="label" xsi:type="string" translate="true">Order history</argument>
                     <argument name="path" xsi:type="string">substitute/order</argument>
