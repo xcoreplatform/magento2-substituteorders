@@ -38,6 +38,7 @@ interface ShipmentInterface
     const TRACKING = 'tracking';
     const ADDITIONAL_DATA = 'additional_data';
     const FILE_CONTENT = 'file_content';
+    const SHIPPING_METHOD = 'shipping_method';
 
     /**
      * Get shipment_id
@@ -248,4 +249,18 @@ interface ShipmentInterface
      * @return $this
      */
     public function setAttachments(array $fileContent);
+
+    /**
+     * Get the shipping method
+     * @return string|null
+     */
+    public function getShippingMethod();
+
+    /**
+     * Set the shipping method
+     * @param string $shipping_method
+     * @return \Dealer4Dealer\SubstituteOrders\Api\Data\ShipmentInterface
+     */
+    public function setShippingMethod($shipping_method);
+
 }

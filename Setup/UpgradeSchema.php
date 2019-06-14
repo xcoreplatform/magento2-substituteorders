@@ -79,6 +79,10 @@ class UpgradeSchema implements UpgradeSchemaInterface
             $this->addExternalCustomerField($installer);
         }
 
+        if (version_compare($context->getVersion(), "2.0.3", "<")) {
+            $this->addShippingMethodField($installer);
+        }
+
         $installer->endSetup();
     }
 
@@ -756,5 +760,28 @@ class UpgradeSchema implements UpgradeSchemaInterface
                 'nullable' => true
             ]
             );
+    }
+
+    /**
+     * Add 'shippingMethod' column to the shipments table
+     *
+     * @param SetupInterface $installer
+     */
+    public function addShippingMethodField($installer){
+        $table = $installer->getTable(InstallSchema::SHIPMENT_TABLE);
+
+        $columns = [
+            'shipping_method' => [
+                'type' => \Magento\Framework\DB\Ddl\Table::TYPE_TEXT,
+                'nullable' => true,
+                'comment' => "Shipping method for the shipment"
+            ]
+        ];
+
+        $connection = $installer->getConnection();
+
+        foreach($columns as $name => $definition){
+            $connection->addColumn($table, $name, $definition);
+        }
     }
 }
