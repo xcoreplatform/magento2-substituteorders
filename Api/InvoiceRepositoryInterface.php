@@ -71,4 +71,10 @@ interface InvoiceRepositoryInterface
      * @throws \Magento\Framework\Exception\LocalizedException
      */
     public function deleteById($invoiceId);
+
+    /**
+     * @param Data\OrderInterface $order
+     * @return \Dealer4Dealer\SubstituteOrders\Api\Data\InvoiceSearchResultsInterface
+     */
+    public function getInvoicesByOrder(\Dealer4Dealer\SubstituteOrders\Api\Data\OrderInterface $order);
 }
