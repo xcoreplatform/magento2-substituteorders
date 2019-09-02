@@ -115,7 +115,6 @@ class ContentUploader extends Uploader implements \Dealer4Dealer\SubstituteOrder
         }
         $this->_fileExists = true;
         $this->_uploadType = self::SINGLE_STYLE;
-        $this->setAllowedExtensions(['pdf']);
         $this->setAllowRenameFiles(true);
         $this->setFilesDispersion(true);
         $result = $this->save($this->getDestinationDirectory($customerIdentifier, $entityType));

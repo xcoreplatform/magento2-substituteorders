@@ -121,10 +121,6 @@ class OrderRepository implements OrderRepositoryInterface
     public function save(
         \Dealer4Dealer\SubstituteOrders\Api\Data\OrderInterface $order
     ) {
-        /* if (empty($order->getStoreId())) {
-            $storeId = $this->storeManager->getStore()->getId();
-            $order->setStoreId($storeId);
-        } */
         try {
             $this->resource->save($order);
         } catch (\Exception $exception) {

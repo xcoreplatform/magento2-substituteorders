@@ -131,11 +131,6 @@ class InvoiceItemRepository implements InvoiceitemRepositoryInterface
     public function save(
         \Dealer4Dealer\SubstituteOrders\Api\Data\InvoiceItemInterface $invoiceItem
     ) {
-    
-        /* if (empty($invoiceItem->getStoreId())) {
-            $storeId = $this->storeManager->getStore()->getId();
-            $invoiceItem->setStoreId($storeId);
-        } */
         try {
             $this->resource->save($invoiceItem);
         } catch (\Exception $exception) {
