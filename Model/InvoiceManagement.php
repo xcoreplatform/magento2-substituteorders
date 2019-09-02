@@ -47,14 +47,18 @@ class InvoiceManagement implements \Dealer4Dealer\SubstituteOrders\Api\InvoiceMa
     protected $attachmentRepository;
 
     /*
-    * @var \Dealer4Dealer\SubstituteOrders\Model\InvoiceRepository
+    * @var \Dealer4Dealer\SubstituteOrders\Model\InvoiceRepository $invoiceRepository
     */
     protected $invoiceRepository;
+
+    /** @var  */
+    protected $orderFactory;
 
     public function __construct(
         \Dealer4Dealer\SubstituteOrders\Model\InvoiceFactory $invoiceFactory,
         \Dealer4Dealer\SubstituteOrders\Model\OrderAddressFactory $addressFactory,
         \Dealer4Dealer\SubstituteOrders\Model\InvoiceItemFactory $invoiceItemFactory,
+        \Dealer4Dealer\SubstituteOrders\Model\OrderFactory $orderFactory,
         \Dealer4Dealer\SubstituteOrders\Model\AttachmentRepository $attachmentRepository,
         \Dealer4Dealer\SubstituteOrders\Model\InvoiceRepository $invoiceRepository
     ) {
@@ -63,6 +67,7 @@ class InvoiceManagement implements \Dealer4Dealer\SubstituteOrders\Api\InvoiceMa
         $this->invoiceItemFactory = $invoiceItemFactory;
         $this->attachmentRepository = $attachmentRepository;
         $this->invoiceRepository = $invoiceRepository;
+        $this->orderFactory = $orderFactory;
     }
 
     /**
@@ -196,5 +201,23 @@ class InvoiceManagement implements \Dealer4Dealer\SubstituteOrders\Api\InvoiceMa
         \Magento\Framework\Api\SearchCriteriaInterface $searchCriteria
     ) {
         return $this->invoiceRepository->getList($searchCriteria);
+    }
+
+    /**
+     * Retrieve Shipments by the order increment id.
+     * @param $id = Magento Order Increment Id
+     * @return mixed
+     */
+    public function getInvoicesByOrderIncrementId($id)
+    {
+        // 1. get order by increment id.
+        $order = $this->orderFactory->create();
+        $order->load($id, "magento_increment_id");
+        if (!$order->getId()) {
+            throw new NoSuchEntityException(__('Order with increment_id "%1" does not exist.', $id));
+        }
+
+        // 2. get shipments.
+        return $this->invoiceRepository->getInvoicesByOrder($order);
     }
 }

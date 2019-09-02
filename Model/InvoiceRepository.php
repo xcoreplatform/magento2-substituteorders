@@ -21,6 +21,7 @@
 
 namespace Dealer4Dealer\SubstituteOrders\Model;
 
+use Magento\Framework\Exception\NotFoundException;
 use Magento\Framework\Reflection\DataObjectProcessor;
 use Magento\Framework\Exception\NoSuchEntityException;
 use Magento\Framework\Api\SortOrder;
@@ -227,5 +228,21 @@ class InvoiceRepository implements InvoiceRepositoryInterface
             throw new NoSuchEntityException(__('Order with id "%1" does not exist.', $id));
         }
         return $invoice;
+    }
+
+    /**
+     * @param \Dealer4Dealer\SubstituteOrders\Api\Data\OrderInterface $order
+     * @return \Dealer4Dealer\SubstituteOrders\Api\Data\InvoiceSearchResultsInterface
+     * @throws \Magento\Framework\Exception\LocalizedException
+     */
+    public function getInvoicesByOrder(\Dealer4Dealer\SubstituteOrders\Api\Data\OrderInterface $order)
+    {
+        $invoiceIds = $order->getInvoiceIds();
+
+        $searchCriteria = $this->searchCriteriaBuilder->addFilter('invoice_id', $invoiceIds, 'in')->create();
+
+        $searchResults = $this->getList($searchCriteria);
+
+        return $searchResults;
     }
 }

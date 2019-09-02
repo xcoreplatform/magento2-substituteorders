@@ -81,4 +81,11 @@ interface InvoiceManagementInterface
     public function getList(
         \Magento\Framework\Api\SearchCriteriaInterface $searchCriteria
     );
+
+    /**
+     * Retrieve Shipments by the order increment id.
+     * @param string $id
+     * @return \Dealer4Dealer\SubstituteOrders\Api\Data\InvoiceSearchResultsInterface
+     */
+    public function getInvoicesByOrderIncrementId($id);
 }
