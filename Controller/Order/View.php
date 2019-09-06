@@ -106,7 +106,11 @@ class View extends \Magento\Framework\App\Action\Action
         if ($order && $order->getId() && $this->canViewOrder($order, $customer)) {
             $this->registry->register('current_order', $order);
 
-            $resultPage = $this->resultPageFactory->create();
+            $resultPage = $this->resultPageFactory->create()->setHeader(
+                'Cache-Control',
+                'must-revalidate, post-check=0, pre-check=0',
+                true
+            );
 
             /** @var \Magento\Framework\View\Element\Html\Links $navigationBlock */
             $navigationBlock = $resultPage->getLayout()->getBlock('customer_account_navigation');
