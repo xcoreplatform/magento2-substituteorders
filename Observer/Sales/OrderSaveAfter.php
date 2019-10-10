@@ -122,16 +122,19 @@ class OrderSaveAfter implements \Magento\Framework\Event\ObserverInterface
         $substituteBillingAddress->setData(array_merge($substituteBillingAddress->getData(), $billingAddressData));
         $substitute->setBillingAddress($substituteBillingAddress);
 
-
         # Add shipping address
         $substituteShippingAddress = $substitute->getShippingAddress();
         if (!$substituteShippingAddress) {
             $substituteShippingAddress = $this->addressFactory->create();
         }
 
-        $shippingAddressData = $order->getShippingAddress()->getData();
-        $shippingAddressData['country'] = $shippingAddressData['country_id'];
+        if ($order->getShippigAddress()) {
+            $shippingAddressData = $order->getShippingAddress()->getData();
+        } else {
+            $shippingAddressData = $order->getBillingAddress()->getData();
+        }
 
+        $shippingAddressData['country'] = $shippingAddressData['country_id'];
         $substituteShippingAddress->setData(array_merge($substituteShippingAddress->getData(), $shippingAddressData));
         $substitute->setShippingAddress($substituteShippingAddress);
 
