@@ -133,8 +133,11 @@ class OrderInvoiceSaveAfter implements \Magento\Framework\Event\ObserverInterfac
             $substituteShippingAddress = $this->addressFactory->create();
         }
 
-        $shippingAddressData = $invoice->getShippingAddress()->getData();
-        $shippingAddressData['country'] = $shippingAddressData['country_id'];
+        if ($order->getShippigAddress()) {
+            $shippingAddressData = $order->getShippingAddress()->getData();
+        } else {
+            $shippingAddressData = $order->getBillingAddress()->getData();
+        }
 
         $substituteShippingAddress->setData(array_merge($substituteShippingAddress->getData(), $shippingAddressData));
         $substitute->setShippingAddress($substituteShippingAddress);
