@@ -121,8 +121,7 @@ class Download extends \Magento\Framework\App\Action\Action
                 ],
                 DirectoryList::MEDIA,
                 'application/octet-stream',
-                ''
-            );
+                '')->setHeader('Cache-Control', 'must-revalidate, post-check=0, pre-check=0', true);
         } catch (\Exception $exception) {
             $this->messageManager->addError($exception->getMessage());
             return $this->resultRedirectFactory->create()->setPath('substitute/order');
