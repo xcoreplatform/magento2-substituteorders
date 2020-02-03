@@ -1,6 +1,7 @@
 "string","stringtranslated"
 "Order history","Order historie"
 "magento_customer_id","Magento Klant ID"
+"External order id","Extern ordernummer"
 "Shipping method:","Verzendwijze:"
 "%1 Item(s)","%1 Order(s)"
 "%1 Item","%1 Order"
@@ -41,3 +42,4 @@
 "Shipping Method","Leverwijze"
 "Billing Address","Factuuradres"
 "Payment Method","Betaalmethode"
+"Shipping & Handling","Verzend- & administratiekosten"
