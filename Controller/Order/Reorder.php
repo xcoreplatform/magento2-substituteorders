@@ -101,15 +101,22 @@ class Reorder extends \Magento\Framework\App\Action\Action
         }
 
         $subOrder = $this->orderFactory->create()->load($orderId);
-
         $incrementId = $subOrder->getMagentoOrderId();
 
-        if (empty($incrementId)) {
+        $magentoOrderFound = false;
+        try{
+            $magentoOrder = $this->orderRepository->get($incrementId);
+            $magentoOrderFound = true;
+        }
+        catch(\Exception $exception){
+        }
+
+        // empty when order from External Platform
+        if ($magentoOrderFound !== true) {
             return $this->reorderByProduct($orderId);
         } else {
             return $this->reorderByOrderItems($subOrder, $incrementId);
         }
-
     }
 
     /**
