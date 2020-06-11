@@ -128,7 +128,7 @@ class OrderSaveAfter implements \Magento\Framework\Event\ObserverInterface
             $substituteShippingAddress = $this->addressFactory->create();
         }
 
-        if ($order->getShippigAddress()) {
+        if ($order->getShippingAddress()) {
             $shippingAddressData = $order->getShippingAddress()->getData();
         } else {
             $shippingAddressData = $order->getBillingAddress()->getData();
