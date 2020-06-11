@@ -28,6 +28,10 @@ class AdditionalData implements AdditionalDataInterface
     protected $key;
     protected $value;
 
+    /**
+     * @param string $key
+     * @param string $value
+     */
     public function __construct($key = '', $value = '')
     {
         $this->key = $key;
