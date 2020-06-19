@@ -44,15 +44,20 @@ class Recent extends \Magento\Framework\View\Element\Template
      */
     protected $customerSession;
 
+    /** @var \Magento\Customer\Api\CustomerRepositoryInterface */
+    protected $_customerRepository;
 
     public function __construct(
         \Magento\Framework\View\Element\Template\Context $context,
         \Dealer4Dealer\SubstituteOrders\Model\ResourceModel\Order\CollectionFactory $orderCollectionFactory,
         \Magento\Customer\Model\Session $customerSession,
+        \Magento\Customer\Api\CustomerRepositoryInterface $customerRepository,
         array $data = []
     ) {
         $this->orderCollectionFactory = $orderCollectionFactory;
         $this->customerSession = $customerSession;
+        $this->_customerRepository = $customerRepository;
+
         parent::__construct($context, $data);
     }
 
@@ -61,12 +66,27 @@ class Recent extends \Magento\Framework\View\Element\Template
         parent::_prepareLayout();
         $this->pageConfig->getTitle()->set(__('Orders'));
 
-        $customerId = $this->customerSession->getCustomer()->getId();
+        /** @var int */
+        $magentoCustomerId = $this->customerSession->getCustomer()->getid();
+        $magentoCustomer = $this->_customerRepository->getById($magentoCustomerId);
 
+        /** @var \Magento\Framework\Api\AttributeInterface */
+        $externalCustomerIdAttribute = $magentoCustomer->getCustomAttribute("external_customer_id");
+        $selectOrderBySetting = $this->_scopeConfig->getValue(
+            'substitute/general/select_orders_by',
+            \Magento\Store\Model\ScopeInterface::SCOPE_STORE
+        );
         $collection = $this->orderCollectionFactory->create();
+
+        $customerSelectionId = $magentoCustomerId;
+        if ($selectOrderBySetting === 'external_customer_id' && $externalCustomerIdAttribute !== null && $externalCustomerIdAttribute->getValue() !== ''){
+            $customerSelectionId = $externalCustomerIdAttribute->getValue();
+            $collection->addFieldToFilter($selectOrderBySetting, $customerSelectionId);
+        } else {
+            $collection->addFieldToFilter('magento_customer_id', $customerSelectionId);
+        }
         $collection->setOrder('order_date')
             ->setOrder('magento_increment_id')
-            ->addFieldToFilter('magento_customer_id', $customerId)
             ->setPageSize(5)
             ->load();
 
