@@ -179,7 +179,7 @@ class DatePickerField extends \Magento\Customer\Block\Widget\AbstractWidget
             'date_format' => $this->getDateFormat(),
             'image' => $this->getViewFileUrl('Magento_Theme::calendar.png'),
             'years_range' => '-120y:c+nn',
-            'max_date' => '-1d',
+            'max_date' => '-0d',
             'change_month' => 'true',
             'change_year' => 'true',
             'show_on' => 'both'
