@@ -50,19 +50,27 @@ class OrderManagement implements \Dealer4Dealer\SubstituteOrders\Api\OrderManage
      */
     protected $orderRepository;
 
+    /*
+     * @var \Dealer4Dealer\SubstituteOrders\Model\OrderItemRepository
+     */
+    protected $orderItemRepository;
+
     /**
      * OrderManagement constructor.
      * @param OrderFactory $orderFactory
      * @param OrderAddressFactory $addressFactory
      * @param OrderItemFactory $orderItemFactory
      * @param AttachmentRepository $attachmentRepository
+     * @param OrderRepository $orderRepository
+     * @param OrderItemRepository $orderItemRepository
      */
     public function __construct(
         \Dealer4Dealer\SubstituteOrders\Model\OrderFactory $orderFactory,
         \Dealer4Dealer\SubstituteOrders\Model\OrderAddressFactory $addressFactory,
         \Dealer4Dealer\SubstituteOrders\Model\OrderItemFactory $orderItemFactory,
         \Dealer4Dealer\SubstituteOrders\Model\AttachmentRepository $attachmentRepository,
-        \Dealer4Dealer\SubstituteOrders\Model\OrderRepository $orderRepository
+        \Dealer4Dealer\SubstituteOrders\Model\OrderRepository $orderRepository,
+        \Dealer4Dealer\SubstituteOrders\MOdel\OrderItemRepository $orderItemRepository
     ) {
     
         $this->orderFactory = $orderFactory;
@@ -70,6 +78,7 @@ class OrderManagement implements \Dealer4Dealer\SubstituteOrders\Api\OrderManage
         $this->orderItemFactory = $orderItemFactory;
         $this->attachmentRepository = $attachmentRepository;
         $this->orderRepository = $orderRepository;
+        $this->orderItemRepository = $orderItemRepository;
     }
 
     /**
@@ -160,6 +169,10 @@ class OrderManagement implements \Dealer4Dealer\SubstituteOrders\Api\OrderManage
 
         if ($billingAddress = $order->getBillingAddress()) {
             $oldOrder->setBillingAddress($billingAddress);
+        }
+
+        foreach ($oldOrder->getItems() as $oldOrderItem){
+            $this->orderItemRepository->delete($oldOrderItem);
         }
 
         $oldOrder->setItems($order->getItems());
