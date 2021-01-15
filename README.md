@@ -210,7 +210,7 @@ The substitute order module uses the Magento 2 REST API for CRUD operations on O
     
 #### Get Order by magento_order_id
 -   **URL:**
-    /V1/dealer4dealer-substituteorders/magentoorder/{id}
+    /V1/dealer4dealer-substituteorders/order/magentoorder/{id}
 -   **Method:**:
     `GET`
 -   **URL Params**
@@ -223,7 +223,7 @@ The substitute order module uses the Magento 2 REST API for CRUD operations on O
 
 #### Get Order by ext_order_id
 -   **URL:**
-    /V1/dealer4dealer-substituteorders/extorder/{id}
+    /V1/dealer4dealer-substituteorders/order/extorder/{id}
 -   **Method:**:
     `GET`
 -   **URL Params**
