@@ -70,7 +70,7 @@ class OrderManagement implements \Dealer4Dealer\SubstituteOrders\Api\OrderManage
         \Dealer4Dealer\SubstituteOrders\Model\OrderItemFactory $orderItemFactory,
         \Dealer4Dealer\SubstituteOrders\Model\AttachmentRepository $attachmentRepository,
         \Dealer4Dealer\SubstituteOrders\Model\OrderRepository $orderRepository,
-        \Dealer4Dealer\SubstituteOrders\MOdel\OrderItemRepository $orderItemRepository
+        \Dealer4Dealer\SubstituteOrders\Model\OrderItemRepository $orderItemRepository
     ) {
     
         $this->orderFactory = $orderFactory;
