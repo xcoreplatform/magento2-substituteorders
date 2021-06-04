@@ -77,4 +77,13 @@
             </argument>
         </arguments>
     </type>
+	
+    <!-- Fix failing integration test by lazy loading dependencies -->
+    <type name="Dealer4Dealer\SubstituteOrders\Console\Command\UpdateOrders">
+        <arguments>
+            <argument name="orderSaveAfter" xsi:type="object">Dealer4Dealer\SubstituteOrders\Observer\Sales\OrderSaveAfter\Proxy</argument>
+            <argument name="orderInvoiceSaveAfter" xsi:type="object">\Dealer4Dealer\SubstituteOrders\Observer\Sales\OrderInvoiceSaveAfter\Proxy</argument>
+            <argument name="shipmentSaveAfter" xsi:type="object">Dealer4Dealer\SubstituteOrders\Observer\Sales\OrderShipmentSaveAfter\Proxy</argument>
+        </arguments>
+    </type>
 </config>
