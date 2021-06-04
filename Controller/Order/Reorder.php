@@ -132,12 +132,25 @@ class Reorder extends \Magento\Framework\App\Action\Action
 
         if ($subOrder && $subOrder->getId() && $this->canReOrder($subOrder, $customer)) {
             $order = $this->orderRepository->get($incrementId);
-
+            
+            $errors = [];
             foreach ($order->getItems() as $item) {
-                $this->cart->addOrderItem($item);
+                try {
+                    $this->cart->addOrderItem($item);
+                } catch (\Magento\Framework\Exception\LocalizedException $e) {
+                    $errors[] = $e->getMessage();
+                } catch (\Exception $e) {
+                    $errors[] = __("We can\'t add ({$product->getName()}) item to your shopping cart right now.");
+                }
             }
-
             $this->cart->save();
+            foreach ($errors as $error) {
+                if ($this->customerSession->getUseNotice(true)) {
+                    $this->messageManager->addNotice($error);
+                } else {
+                    $this->messageManager->addError($error);
+                }
+            }
 
             $resultRedirect = $this->resultRedirectFactory->create();
             return $resultRedirect->setPath('checkout/cart');
