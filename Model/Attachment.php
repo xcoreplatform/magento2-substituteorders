@@ -152,7 +152,7 @@ class Attachment extends \Magento\Framework\Model\AbstractModel implements Attac
      *
      * @return string
      */
-    public function getBasePath($customerIdentifier = '0', $entityType)
+    public function getBasePath($entityType,$customerIdentifier = '0')
     {
         return 'customer/substitute_order/files/' . $customerIdentifier . '/' . $entityType;
     }
