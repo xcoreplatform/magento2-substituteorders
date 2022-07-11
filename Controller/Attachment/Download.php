@@ -108,8 +108,8 @@ class Download extends \Magento\Framework\App\Action\Action
             $fileNameParts = explode('/', $attachment->getFile());
             $fileName = end($fileNameParts);
             $filePath = $attachment->getBasePath(
-                $attachment->getMagentoCustomerIdentifier(),
-                $attachment->getEntityType()
+                $attachment->getEntityType(),
+                $attachment->getMagentoCustomerIdentifier()
             );
             $filePath .= $attachment->getFile();
 

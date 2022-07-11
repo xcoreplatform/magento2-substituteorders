@@ -133,7 +133,7 @@ class ContentUploader extends Uploader implements \Dealer4Dealer\SubstituteOrder
      */
     public function getDestinationDirectory($customerIdentifier, $entityType)
     {
-        $directory = $this->mediaDirectory->getAbsolutePath($this->attachmentConfig->getBasePath($customerIdentifier, $entityType));
+        $directory = $this->mediaDirectory->getAbsolutePath($this->attachmentConfig->getBasePath($entityType, $customerIdentifier));
         return $directory;
     }
 }
