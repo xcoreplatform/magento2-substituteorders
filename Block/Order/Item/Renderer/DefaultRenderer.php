@@ -45,7 +45,7 @@ class DefaultRenderer extends \Magento\Framework\View\Element\Template
         \Magento\Framework\Stdlib\StringUtils $string,
         \Magento\Catalog\Model\Product\OptionFactory $productOptionFactory,
         \Magento\Framework\Registry $registry,
-        array $data = [],
+        array $data = []
     ) {
         $this->string = $string;
         $this->_productOptionFactory = $productOptionFactory;
