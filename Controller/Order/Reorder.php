@@ -140,7 +140,7 @@ class Reorder extends \Magento\Framework\App\Action\Action
                 } catch (\Magento\Framework\Exception\LocalizedException $e) {
                     $errors[] = $e->getMessage();
                 } catch (\Exception $e) {
-                    $errors[] = __("We can\'t add ({$product->getName()}) item to your shopping cart right now.");
+                    $errors[] = __("We can\'t add %1 item to your shopping cart right now.", $item->getName());
                 }
             }
             $this->cart->save();
@@ -185,7 +185,7 @@ class Reorder extends \Magento\Framework\App\Action\Action
                 } catch (\Magento\Framework\Exception\LocalizedException $e) {
                     $errors[] = $e->getMessage();
                 } catch (\Exception $e) {
-                    $errors[] = __("We can\'t add ({$product->getName()}) item to your shopping cart right now.");
+                    $errors[] = __("We can\'t add %1 item to your shopping cart right now.", $product->getName());
                 }
             }
             $this->cart->save();
