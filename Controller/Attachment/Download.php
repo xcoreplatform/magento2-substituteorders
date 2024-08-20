@@ -113,7 +113,7 @@ class Download extends \Magento\Framework\App\Action\Action
             );
             $filePath .= $attachment->getFile();
 
-            $this->fileFactory->create(
+            return $this->fileFactory->create(
                 $fileName,
                 [
                     'type' => 'filename',
