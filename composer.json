@@ -1,5 +1,5 @@
 {
-    "name": "dealer4dealer/module-substituteorders",
+    "name": "xcoreplatform/module-substituteorders",
     "description": "A module so Magento saves orders from multiple sources in one table, overrides the default order list in customer backend. ",
     "license": "GPL-3.0-only",
     "authors": [
