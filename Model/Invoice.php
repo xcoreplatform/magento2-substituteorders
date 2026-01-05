@@ -97,8 +97,8 @@ class Invoice extends \Magento\Framework\Model\AbstractModel implements InvoiceI
         \Dealer4Dealer\SubstituteOrders\Api\InvoiceItemRepositoryInterface $orderItems,
         \Dealer4Dealer\SubstituteOrders\Api\OrderAddressRepositoryInterface $orderAddress,
         \Dealer4Dealer\SubstituteOrders\Api\AttachmentRepositoryInterface $attachmentRepository,
-        \Magento\Framework\Model\ResourceModel\AbstractResource $resource = null,
-        \Magento\Framework\Data\Collection\AbstractDb $resourceCollection = null,
+        ?\Magento\Framework\Model\ResourceModel\AbstractResource $resource = null,
+        ?\Magento\Framework\Data\Collection\AbstractDb $resourceCollection = null,
         array $data = []
     ) {
         $this->storeManager = $storeManager;

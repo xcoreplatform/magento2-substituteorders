@@ -132,7 +132,7 @@ class Attachment extends \Magento\Framework\Model\AbstractModel implements Attac
      * @param \Dealer4Dealer\SubstituteOrders\Api\Data\File\ContentInterface $fileContent
      * @return $this
      */
-    public function setFileContent(\Dealer4Dealer\SubstituteOrders\Api\Data\File\ContentInterface $fileContent = null)
+    public function setFileContent(?\Dealer4Dealer\SubstituteOrders\Api\Data\File\ContentInterface $fileContent = null)
     {
         return $this->setData(self::FILE_CONTENT, $fileContent);
     }
