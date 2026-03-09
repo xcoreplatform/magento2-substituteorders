@@ -89,8 +89,8 @@ interface AttachmentInterface
     /**
      * Set file content
      *
-     * @param \Dealer4Dealer\SubstituteOrders\Api\Data\File\ContentInterface $fileContent
+     * @param ?\Dealer4Dealer\SubstituteOrders\Api\Data\File\ContentInterface $fileContent
      * @return $this
      */
-    public function setFileContent(\Dealer4Dealer\SubstituteOrders\Api\Data\File\ContentInterface $fileContent = null);
+    public function setFileContent(?\Dealer4Dealer\SubstituteOrders\Api\Data\File\ContentInterface $fileContent = null);
 }

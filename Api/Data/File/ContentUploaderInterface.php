@@ -15,8 +15,9 @@ interface ContentUploaderInterface
     /**
      * Upload provided downloadable file content
      *
-     * @param ContentInterface $fileContent
-     * @param string $contentType
+     * @param \Dealer4Dealer\SubstituteOrders\Api\Data\File\ContentInterface $fileContent
+     * @param string $customerIdentifier
+     * @param string $entityType
      * @return array
      * @throws \InvalidArgumentException
      */

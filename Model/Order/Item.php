@@ -118,8 +118,8 @@ class Item extends AbstractModel implements OrderItemInterface
         \Magento\Sales\Model\OrderFactory $orderFactory,
         \Magento\Store\Model\StoreManagerInterface $storeManager,
         \Magento\Catalog\Api\ProductRepositoryInterface $productRepository,
-        \Magento\Framework\Model\ResourceModel\AbstractResource $resource = null,
-        \Magento\Framework\Data\Collection\AbstractDb $resourceCollection = null,
+        ?\Magento\Framework\Model\ResourceModel\AbstractResource $resource = null,
+        ?\Magento\Framework\Data\Collection\AbstractDb $resourceCollection = null,
         array $data = []
     ) {
         parent::__construct(
@@ -424,7 +424,7 @@ class Item extends AbstractModel implements OrderItemInterface
      * @param array $options
      * @return $this
      */
-    public function setProductOptions(array $options = null)
+    public function setProductOptions(?array $options = null)
     {
         $this->setData('product_options', $options);
         return $this;

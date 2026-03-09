@@ -13,8 +13,6 @@
     <preference for="Dealer4Dealer\SubstituteOrders\Api\Data\AdditionalDataInterface" type="Dealer4Dealer\SubstituteOrders\Model\AdditionalData"/>
 
     <preference for="Dealer4Dealer\SubstituteOrders\Api\OrderManagementInterface" type="Dealer4Dealer\SubstituteOrders\Model\OrderManagement"/>
-    <preference for="Dealer4Dealer\SubstituteOrders\Api\OrderAddressManagementInterface" type="Dealer4Dealer\SubstituteOrders\Model\OrderAddressManagement"/>
-    <preference for="Dealer4Dealer\SubstituteOrders\Api\OrderItemsManagementInterface" type="Dealer4Dealer\SubstituteOrders\Model\OrderItemsManagement"/>
 
     <!--Order Repository-->
     <preference for="Dealer4Dealer\SubstituteOrders\Api\OrderRepositoryInterface" type="Dealer4Dealer\SubstituteOrders\Model\OrderRepository"/>
