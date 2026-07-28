@@ -54,7 +54,7 @@ class UpdateOrders extends Command
     protected function execute(
         InputInterface $input,
         OutputInterface $output
-    ) {
+    ): int {
         $this->state->setAreaCode(\Magento\Framework\App\Area::AREA_FRONTEND);
 
         $collection = $this->orderFactory->create()->getCollection();
@@ -109,6 +109,8 @@ class UpdateOrders extends Command
 
             $page++;
         }
+
+        return \Magento\Framework\Console\Cli::RETURN_SUCCESS;
     }
 
     /**
